@@ -1,0 +1,113 @@
+.promo {
+  padding: 75px calc((100vw - 1140px) / 2);
+  display: grid;
+  grid-template-columns: 50vw 310px;
+  justify-content: space-between;
+  background-color: #073042;
+}
+
+.promo__titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.promo__title {
+  font-weight: 400;
+  font-size: calc((100vw - 768px) / (1280 - 768) * (50 - 40) + 40px);
+  line-height: 58px;
+  color: #fff;
+  margin: 0 0 36px;
+  padding: 0;
+}
+
+.promo__subtitle {
+  max-width: 310px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: #fff;
+  margin: 0 0 146px;
+  opacity: 50%;
+}
+
+.promo__logo {
+  width: 310px;
+  height: 304px;
+  background-image: url(../../images/promo-logo.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+@media screen and (max-width: 1280px) {
+  .promo {
+    padding-left: 70px;
+    padding-right: 70px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .promo {
+    padding: 140px calc((100vw - 680px) / 2) 76px;
+    grid-template-columns: 680px;
+    row-gap: 50px;
+    box-sizing: border-box;
+  }
+
+  .promo__titles {
+    align-items: center;
+  }
+
+  .promo__logo {
+    justify-self: center;
+    grid-row-start: 1;
+  }
+
+  .promo__title {
+    text-align: center;
+    line-height: 50px;
+    margin-bottom: 22px;
+  }
+
+  .promo__subtitle {
+    text-align: center;
+    max-width: 260px;
+    margin-bottom: 92px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .promo__title {
+    font-size: calc((100vw - 320px) / (768 - 320) * (40 - 30) + 30px);
+  }
+
+  .promo {
+    padding-left: 40px;
+    padding-right: 40px;
+    grid-template-columns: calc(100vw - 80px);
+  }
+
+
+@media screen and (max-width: 425px) {
+  .promo {
+    padding: 70px 10px 30px;
+    grid-template-columns: calc(100vw - 20px);
+    gap: 44px;
+  }
+
+  .promo__title {
+    line-height: 38px;
+    margin-bottom: 24px;
+    letter-spacing: -.04em;
+  }
+
+  .promo__subtitle {
+    margin-bottom: 80px;
+  }
+
+  .promo__logo {
+    width: 210px;
+    height: 206px;
+  }
+}}

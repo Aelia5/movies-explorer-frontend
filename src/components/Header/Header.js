@@ -1,8 +1,7 @@
 import React from "react";
 import "./Header.css";
-import "../Navigation/Navigation"
 import { Link } from "react-router-dom";
-import Navigation from '../Navigation/Navigation';
+import Navigation from "../Navigation/Navigation";
 
 function Header({ loggedIn, className }) {
   const [menuOpened, setMenuOpened] = React.useState(false);
@@ -12,7 +11,7 @@ function Header({ loggedIn, className }) {
   }
 
   return (
-    <div className={`header ${className}`}>
+    <header className={`header ${className}`}>
       <Link to="/">
         <button className="header__logo"></button>
       </Link>
@@ -47,13 +46,15 @@ function Header({ loggedIn, className }) {
         </>
       ) : (
         <div className="header__menu header__menu_unauthorized">
-          <Link className="header__link header__link_type_account" to="/signup">Регистрация</Link>
+          <Link className="header__link header__link_type_account" to="/signup">
+            Регистрация
+          </Link>
           <Link to="/signin">
             <button className="header__login-button">Войти</button>
           </Link>
         </div>
       )}
-    </div>
+    </header>
   );
 }
 
