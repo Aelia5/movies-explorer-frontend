@@ -17,4 +17,8 @@
     font-size: 18px;
     line-height: 21.78px;
   }
+
+  .section-title_type_techs {
+    border-bottom: 1px solid #000;
+  }
 }
