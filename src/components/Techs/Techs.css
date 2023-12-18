@@ -1,5 +1,4 @@
 .techs {
-  padding: 100px calc((100vw - 1140px) / 2);
   display: flex;
   flex-direction: column;
   background-color: #272727;
@@ -53,13 +52,6 @@
   color: #fff;
 }
 
-@media screen and (max-width: 1280px) {
-  .techs {
-    padding-left: 70px;
-    padding-right: 70px;
-  }
-}
-
 @media screen and (max-width: 830px) {
   .techs__table {
     grid-template-columns: repeat(auto-fit, calc((100vw - 200px) / 7));
@@ -67,10 +59,6 @@
 }
 
 @media screen and (max-width: 768px) {
-  .techs {
-    padding: 90px 50px;
-  }
-
   .techs__title {
     margin: 80px 0 22px;
   }
@@ -94,10 +82,6 @@
 }
 
 @media screen and (max-width: 426px) {
-  .techs {
-    padding: 70px 18px;
-  }
-
   .techs__title {
     margin: 60px 0 24px;
     font-size: 30px;

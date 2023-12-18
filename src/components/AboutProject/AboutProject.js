@@ -1,9 +1,13 @@
 import "./AboutProject.css";
 import "../../blocks/section-title.css";
+import "../../blocks/section.css";
 
 function AboutProject() {
   return (
-    <section className="about-project">
+    <section
+      className="section section_type_about-project about-project"
+      id="about-project"
+    >
       <h2 className="section-title">О проекте</h2>
       <div className="about-project__table">
         <div>

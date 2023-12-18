@@ -1,0 +1,32 @@
+.section {
+  padding: 110px calc((100vw - 1140px) / 2);
+}
+
+.section_type_techs {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+@media screen and (max-width: 1280px) {
+  .section {
+    padding-left: 70px;
+    padding-right: 70px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .section {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .section {
+    padding: 70px 14px;
+  }
+
+  .section_type_about-project {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}

@@ -1,9 +1,10 @@
 import "./Techs.css";
 import "../../blocks/section-title.css";
+import "../../blocks/section.css";
 
 function Techs() {
   return (
-    <section className="techs">
+    <section className="section section_type_techs techs">
       <h2 className="section-title section-title_type_techs">Технологии</h2>
       <p className="techs__title">7 технологий</p>
       <p className="techs__text">

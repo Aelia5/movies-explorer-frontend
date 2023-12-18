@@ -1,11 +1,14 @@
 .navTab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 129px;
   height: 36px;
   border-radius: 3px;
-  opacity: 60%;
   cursor: pointer;
-  border: 1px solid #FFF;
-  color: #FFF;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  color: #fff;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
