@@ -66,11 +66,11 @@
   }
 
   .portfolio__link-text {
-    font-size: calc((100vw - 426px) / (768 - 480) * (28 - 18) + 18px);
+    font-size: calc((100vw - 426px) / (768 - 426) * (28 - 18) + 18px);
   }
 
   .portfolio__link-button {
-    font-size: calc((100vw - 426px) / (768 - 480) * (28 - 18) + 18px);
+    font-size: calc((100vw - 426px) / (768 - 426) * (28 - 18) + 18px);
   }
 }
 

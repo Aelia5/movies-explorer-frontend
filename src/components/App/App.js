@@ -3,9 +3,10 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
+import Footer from "../Footer/Footer";
 
 function App() {
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
 
   return (
     <div className="app">
@@ -16,6 +17,7 @@ function App() {
             <>
               <Header className="header_type_landing" loggedIn={loggedIn} />
               <Main></Main>
+              <Footer></Footer>
             </>
           }
         />

@@ -13,7 +13,7 @@
 
 .section_type_portfolio {
   padding-top: 0;
-  padding-bottom: 125px;
+  padding-bottom: 106px;
 }
 
 @media screen and (max-width: 1280px) {
@@ -30,6 +30,7 @@
 
   .section_type_portfolio {
     padding-top: 0;
+    padding-bottom: 71px;
   }
 }
 
@@ -45,5 +46,6 @@
 
   .section_type_portfolio {
     padding-top: 0;
+    padding-bottom: 51px;
   }
 }

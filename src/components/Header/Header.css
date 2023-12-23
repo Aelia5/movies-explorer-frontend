@@ -50,6 +50,7 @@
   flex-direction: row;
   align-items: center;
   gap: 7px;
+  cursor: pointer;
 }
 
 .header__link {
@@ -63,6 +64,10 @@
   font-weight: 500;
   font-size: 13px;
   line-height: 12px;
+}
+
+.header__account:hover > .header__link {
+  opacity: 0.7;
 }
 
 .header__profile-button {
@@ -79,8 +84,7 @@
   padding: 0;
 }
 
-.header__profile-button:hover,
-.header__link:hover + .header__profile-button {
+.header__account:hover > .header__profile-button {
   opacity: 0.8;
 }
 
