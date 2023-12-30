@@ -38,7 +38,7 @@
 }
 
 .header__menu_authorized {
-  gap: calc((100vw - 519px) / 2);
+  gap: 364px;
 }
 
 .header__menu_unauthorized {
@@ -148,6 +148,10 @@
     padding-left: 70px;
     padding-right: 70px;
   }
+
+  .header__menu_authorized {
+    gap: calc((100vw - 519px) / 2);
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -221,6 +225,10 @@
     width: 54px;
     height: 26px;
     font-size: 10px;
+  }
+
+  .header__burger-menu {
+    height: 43px;
   }
 }
 
