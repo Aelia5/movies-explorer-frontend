@@ -1,0 +1,6 @@
+.movies-card {
+  border: 3px solid red;
+  box-sizing: border-box;
+  aspect-ratio: 25 / 14;
+  list-style-type: none;
+}

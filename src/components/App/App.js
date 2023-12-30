@@ -29,6 +29,7 @@ function App() {
               <>
                 <Header className="" loggedIn={loggedIn} />
                 <Movies />
+                <Footer />
               </>
             ) : (
               <Navigate to="/signup" replace />
