@@ -52,9 +52,7 @@
 
 @media screen and (max-width: 768px) {
   .search-form {
-    padding-top: 80px;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding: 80px 30px 60px;
   }
 
   .search-form__input {
@@ -64,9 +62,7 @@
 
 @media screen and (max-width: 426px) {
   .search-form {
-    padding-top: 84px;
-    padding-left: 14px;
-    padding-right: 14px;
+    padding: 84px 14px 50px;
   }
 
   .search-form__input {

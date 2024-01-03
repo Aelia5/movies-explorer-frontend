@@ -36,7 +36,7 @@
 @media screen and (max-width: 630px) {
   .movies-cardlist {
     grid-template-columns: minmax(270px, 339px);
-    row-gap: 10px;
+    row-gap: 20px;
   }
 }
 

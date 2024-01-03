@@ -1,31 +1,36 @@
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
-import movieImageOne from "../../images/movies/movie01.png";
-import movieImageTwo from "../../images/movies/movie02.png";
-import movieImageThree from "../../images/movies/movie03.png";
-import movieImageFour from "../../images/movies/movie04.png";
+import movieImages from "../../utils/constants";
+import React from "react";
 
 function MoviesCardList() {
+  const [width, serWidth] = React.useState(window.innerWidth);
+
+  React.useEffect(() => {
+    const handleResizeWindow = () => serWidth(window.innerWidth);
+    window.addEventListener("resize", handleResizeWindow);
+    return () => {
+      window.removeEventListener("resize", handleResizeWindow);
+    };
+  }, []);
+
+  let cardsNumber;
+
+  if (width > 990) {
+    cardsNumber = 16;
+  } else if (width > 630) {
+    cardsNumber = 8;
+  } else {
+    cardsNumber = 5;
+  }
+
+  const movieImageToRender = movieImages.slice(0, cardsNumber);
+
   return (
-    <section aria-label="Список фильмов">
-      <ul className="movies-cardlist">
-        <MoviesCard movieImage={movieImageOne} />
-        <MoviesCard movieImage={movieImageTwo} />
-        <MoviesCard movieImage={movieImageThree} />
-        <MoviesCard movieImage={movieImageFour} />
-        <MoviesCard movieImage={movieImageOne} />
-        <MoviesCard movieImage={movieImageTwo} />
-        <MoviesCard movieImage={movieImageThree} />
-        <MoviesCard movieImage={movieImageFour} />
-        <MoviesCard movieImage={movieImageOne} />
-        <MoviesCard movieImage={movieImageTwo} />
-        <MoviesCard movieImage={movieImageThree} />
-        <MoviesCard movieImage={movieImageFour} />
-        <MoviesCard movieImage={movieImageOne} />
-        <MoviesCard movieImage={movieImageTwo} />
-        <MoviesCard movieImage={movieImageThree} />
-        <MoviesCard movieImage={movieImageFour} />
-      </ul>
+    <section aria-label="Список фильмов" className="movies-cardlist">
+      {movieImageToRender.map((movieImage) => (
+        <MoviesCard key={movieImage._id} movieImage={movieImage.link} />
+      ))}
     </section>
   );
 }

@@ -8,3 +8,28 @@
   background-color: #202020;
   box-sizing: border-box;
 }
+
+.movies__button-more {
+  margin: 50px auto 80px;
+  width: 320px;
+  height: 36px;
+  box-sizing: border-box;
+  border: 1px solid #424242;
+  border-radius: 6px;
+  background-color: transparent;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14.52px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.movies__button-more:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 426px) {
+  .movies__button-more {
+    width: 240px;
+  }
+}
