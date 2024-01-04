@@ -5,10 +5,14 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import Movies from "../Movies/Movies";
-import SavedMovies from "../SavedMovies/SavedMovies"
+import SavedMovies from "../SavedMovies/SavedMovies";
+import Profile from '../Profile/Profile';
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(true);
+  function logOut() {
+    setLoggedIn(false);
+  }
 
   return (
     <div className="app">
@@ -53,7 +57,16 @@ function App() {
         />
         <Route
           path="/profile"
-          element={<Header className="" loggedIn={loggedIn} />}
+          element={
+            loggedIn ? (
+              <>
+                <Header className="" loggedIn={loggedIn} />
+                <Profile onExit={logOut}/>
+              </>
+            ) : (
+              <Navigate to="/signup" replace />
+            )
+          }
         />
         <Route path="/signin" element={<div></div>} />
         <Route path="/signup" element={<div />} />
