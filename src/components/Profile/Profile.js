@@ -1,7 +1,7 @@
 import "./Profile.css";
 import React from "react";
 
-function Profile({onExit}) {
+function Profile({ onExit }) {
   const [name, setName] = React.useState("Виталий");
   function handleNameChange(e) {
     setName(e.target.value);
@@ -50,8 +50,12 @@ function Profile({onExit}) {
               onChange={handleEmailChange}
             ></input>
           </label>
-          <p className='profile__error'>При обновлении профиля произошла ошибка</p>
-          <button className='profile__submit-button profile__submit-button_active'>Сохранить</button>
+          <p className="profile__error">
+            При обновлении профиля произошла ошибка
+          </p>
+          <button className="profile__submit-button profile__submit-button_active">
+            Сохранить
+          </button>
         </form>
       ) : (
         <div className="profile__form">
@@ -63,12 +67,18 @@ function Profile({onExit}) {
             E-mail
             <span className="profile__input">pochta@yandex.ru</span>
           </div>
-          <div className='profile__options'>
-            <button className='profile__option' onClick={openEdit}>Редактировать</button>
-            <button className='profile__option profile__option_type_exit' onClick={onExit}>Выйти из аккаунта</button>
+          <div className="profile__options">
+            <button className="profile__option" onClick={openEdit}>
+              Редактировать
+            </button>
+            <button
+              className="profile__option profile__option_type_exit"
+              onClick={onExit}
+            >
+              Выйти из аккаунта
+            </button>
           </div>
         </div>
-
       )}
     </section>
   );
