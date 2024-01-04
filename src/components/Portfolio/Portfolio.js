@@ -8,6 +8,8 @@ function Portfolio() {
       <a
         className="portfolio__link"
         href="https://github.com/Aelia5/how-to-learn"
+        target="_blank"
+        rel="noreferrer"
       >
         <p className="portfolio__link-text">Статичный сайт</p>
         <button className="portfolio__link-button">↗</button>
@@ -15,6 +17,8 @@ function Portfolio() {
       <a
         className="portfolio__link"
         href="https://github.com/Aelia5/russian-travel"
+        target="_blank"
+        rel="noreferrer"
       >
         <p className="portfolio__link-text">Адаптивный сайт</p>
         <button className="portfolio__link-button">↗</button>
@@ -22,6 +26,8 @@ function Portfolio() {
       <a
         className="portfolio__link"
         href="https://github.com/Aelia5/react-mesto-api-full-gha"
+        target="_blank"
+        rel="noreferrer"
       >
         <p className="portfolio__link-text">Одностраничное приложение</p>
         <button className="portfolio__link-button">↗</button>

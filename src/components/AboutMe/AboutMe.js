@@ -26,7 +26,12 @@ function AboutMe() {
           src={myPhoto}
           alt="Моя фотография"
         ></img>
-        <a className="about-me__link" href="https://github.com/Aelia5">
+        <a
+          className="about-me__link"
+          href="https://github.com/Aelia5"
+          target="_blank"
+          rel="noreferrer"
+        >
           Github
         </a>
       </div>

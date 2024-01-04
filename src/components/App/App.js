@@ -5,6 +5,7 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import Movies from "../Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies"
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(true);
@@ -38,7 +39,17 @@ function App() {
         />
         <Route
           path="/saved-movies"
-          element={<Header className="" loggedIn={loggedIn} />}
+          element={
+            loggedIn ? (
+              <>
+                <Header className="" loggedIn={loggedIn} />
+                <SavedMovies />
+                <Footer />
+              </>
+            ) : (
+              <Navigate to="/signup" replace />
+            )
+          }
         />
         <Route
           path="/profile"

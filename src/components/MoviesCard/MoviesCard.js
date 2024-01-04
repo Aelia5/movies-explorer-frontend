@@ -1,7 +1,7 @@
 import "./MoviesCard.css";
 import React from "react";
 
-function MoviesCard({ movieImage }) {
+function MoviesCard({ movieImage, isSaved }) {
   const [isLiked, setIsLiked] = React.useState(false);
 
   function toggleLike() {
@@ -16,12 +16,19 @@ function MoviesCard({ movieImage }) {
         src={movieImage}
       ></img>
       <h2 className="movies-card__title">33 слова о дизайне</h2>
-      <button
-        className={`movies-card__like-button ${
-          isLiked ? "movies-card__like-button_active" : ""
-        }`}
-        onClick={toggleLike}
-      ></button>
+      {isSaved ? (
+        <button className="movies-card__button  movies-card__button_type_delete" />
+      ) : (
+        <button
+          className={`movies-card__button ${
+            isLiked
+              ? "movies-card__button_type_liked"
+              : "movies-card__button_type_unliked"
+          }`}
+          onClick={toggleLike}
+        ></button>
+      )}
+
       <p className="movies-card__length">1ч42м</p>
     </li>
   );

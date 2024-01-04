@@ -1,8 +1,9 @@
 .movies {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
+  min-height: calc(100vh - 246px);
   margin: 0;
   padding: 0;
   background-color: #202020;
