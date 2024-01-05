@@ -1,5 +1,6 @@
 import React from "react";
 import "./Header.css";
+import "../../blocks/logo.css";
 import { Link } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 
@@ -13,7 +14,7 @@ function Header({ loggedIn, className }) {
   return (
     <header className={`header ${className}`}>
       <Link to="/">
-        <button className="header__logo"></button>
+        <button className="logo"></button>
       </Link>
       {loggedIn ? (
         <>

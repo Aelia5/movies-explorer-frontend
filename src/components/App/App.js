@@ -6,7 +6,8 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
-import Profile from '../Profile/Profile';
+import Profile from "../Profile/Profile";
+import Register from "../Register/Register";
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(true);
@@ -61,7 +62,7 @@ function App() {
             loggedIn ? (
               <>
                 <Header className="" loggedIn={loggedIn} />
-                <Profile onExit={logOut}/>
+                <Profile onExit={logOut} />
               </>
             ) : (
               <Navigate to="/signup" replace />
@@ -69,7 +70,18 @@ function App() {
           }
         />
         <Route path="/signin" element={<div></div>} />
-        <Route path="/signup" element={<div />} />
+        <Route
+          path="/signup"
+          element={
+            loggedIn ? (
+              <>
+                <Navigate to="/profile" replace />
+              </>
+            ) : (
+              <Register />
+            )
+          }
+        />
         <Route path="/*" element={<div>404</div>} />
       </Routes>
     </div>

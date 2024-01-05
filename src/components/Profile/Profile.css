@@ -11,11 +11,6 @@
 
 .profile__title {
   margin: 0;
-  padding: 0;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 29.05px;
-  color: #fff;
 }
 
 .profile__form {
@@ -85,35 +80,8 @@
   font-weight: 500;
 }
 
-.profile__error {
+.profile__api-error {
   margin: 172px 0 20px;
-  font-weight: 400;
-  font-size: 11px;
-  line-height: 13.31px;
-  color: #ee3465;
-  text-align: center;
-  visibility: hidden;
-}
-
-.profile__error_visible {
-  visibility: visible;
-}
-
-.profile__submit-button {
-  margin: 0;
-  padding: 0;
-  height: 45px;
-  background-color: #2f2f2f;
-  border: none;
-  color: #8b8b8b;
-  font-size: 14px;
-  line-height: 16.94px;
-  font-weight: 500;
-}
-
-.profile__submit-button_active {
-  background-color: #4285f4;
-  color: #fff;
 }
 
 @media screen and (max-width: 768px) {

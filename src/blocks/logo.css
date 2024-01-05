@@ -1,0 +1,15 @@
+.logo {
+  width: 38px;
+  height: 38px;
+  background-image: url(../images/logo.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}

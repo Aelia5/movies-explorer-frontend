@@ -19,7 +19,7 @@ function Profile({ onExit }) {
 
   return (
     <section className="profile">
-      <h2 className="profile__title">Привет, Виталий!</h2>
+      <h2 className="form__title profile__title">Привет, Виталий!</h2>
       {isEdited ? (
         <form className="profile__form">
           <label className="profile__label" for="name">
@@ -50,10 +50,10 @@ function Profile({ onExit }) {
               onChange={handleEmailChange}
             ></input>
           </label>
-          <p className="profile__error">
+          <p className="form__api-error profile__api-error">
             При обновлении профиля произошла ошибка
           </p>
-          <button className="profile__submit-button profile__submit-button_active">
+          <button className="form__submit-button form__submit-button_active">
             Сохранить
           </button>
         </form>
