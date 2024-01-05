@@ -64,6 +64,10 @@
   color: #ee3465;
   text-align: center;
   visibility: hidden;
+  min-height: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .form__api-error_visible {
@@ -111,13 +115,6 @@
   .form {
     width: 260px;
   }
-  .form__api-error {
-    min-height: 26px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
   .form__submit-button {
     font-size: 12px;
     line-height: 14.52px;

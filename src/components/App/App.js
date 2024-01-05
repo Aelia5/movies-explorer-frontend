@@ -8,6 +8,7 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Register from "../Register/Register";
+import Login from "../Login/Login";
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(true);
@@ -69,7 +70,15 @@ function App() {
             )
           }
         />
-        <Route path="/signin" element={<div></div>} />
+        <Route path="/signin" element={
+            loggedIn ? (
+              <>
+                <Navigate to="/profile" replace />
+              </>
+            ) : (
+              <Login />
+            )
+          } />
         <Route
           path="/signup"
           element={
