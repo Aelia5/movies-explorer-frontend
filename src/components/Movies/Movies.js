@@ -5,12 +5,12 @@ import Preloader from "../Preloader/Preloader";
 
 function Movies() {
   return (
-    <div className="movies">
+    <main className="movies">
       <SearchForm />
       <Preloader />
       <MoviesCardList isSaved={false} />
       <button className="movies__button-more">Ещё</button>
-    </div>
+    </main>
   );
 }
 

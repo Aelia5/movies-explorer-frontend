@@ -1,4 +1,5 @@
 .filter-checkbox {
+  position: relative;
   align-self: flex-start;
   display: flex;
   flex-direction: row;

@@ -9,7 +9,7 @@ function FilterCheckbox() {
   }
 
   return (
-    <label className="filter-checkbox" for="shortie">
+    <label className="filter-checkbox" htmlFor="shortie">
       <input
         className="filter-checkbox__invisible-checkbox"
         type="checkbox"

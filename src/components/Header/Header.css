@@ -9,6 +9,7 @@
   height: 74px;
   background-color: #202020;
   box-sizing: border-box;
+  position: relative;
 }
 
 .header_type_landing {
@@ -217,6 +218,7 @@
 }
 
 .header__menu_opened {
+  z-index: 2;
   display: flex;
 }
 

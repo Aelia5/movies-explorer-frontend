@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import "../../blocks/not-found.css";
-import { Routes, Route, Navigate, useNavigate, Link } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";

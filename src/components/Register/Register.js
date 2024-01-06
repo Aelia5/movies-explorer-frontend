@@ -2,9 +2,11 @@ import "./Register.css";
 import "../../blocks/logo.css";
 import "../../blocks/form.css";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
+
   const [name, setName] = React.useState("Виталий");
   function handleNameChange(e) {
     setName(e.target.value);
@@ -21,11 +23,14 @@ function Register() {
   }
 
   return (
-    <section className="register">
-      <div className="logo register__logo"></div>
+    <main className="register">
+      <button
+        className="logo register__logo"
+        onClick={() => navigate("/", { replace: true })}
+      ></button>
       <h2 className="form__title register__title">Добро пожаловать!</h2>
       <form className="form">
-        <label for="name" className="form__label">
+        <label htmlFor="name" className="form__label">
           Имя
         </label>
         <input
@@ -40,7 +45,7 @@ function Register() {
           required
         ></input>
         <p className="form__input-error">Что-то пошло не так...</p>
-        <label for="email" className="form__label">
+        <label htmlFor="email" className="form__label">
           E-mail
         </label>
         <input
@@ -53,7 +58,7 @@ function Register() {
           required
         ></input>
         <p className="form__input-error">Что-то пошло не так...</p>
-        <label for="password" className="form__label">
+        <label htmlFor="password" className="form__label">
           Пароль
         </label>
         <input
@@ -82,7 +87,7 @@ function Register() {
           Войти
         </Link>
       </p>
-    </section>
+    </main>
   );
 }
 

@@ -18,11 +18,11 @@ function Profile({ onExit }) {
   }
 
   return (
-    <section className="profile">
+    <main className="profile">
       <h2 className="form__title profile__title">Привет, Виталий!</h2>
       {isEdited ? (
         <form className="profile__form">
-          <label className="profile__label" for="name">
+          <label className="profile__label" htmlFor="name">
             Имя
             <input
               className="profile__input"
@@ -37,7 +37,7 @@ function Profile({ onExit }) {
               required
             ></input>
           </label>
-          <label className="profile__label" for="email">
+          <label className="profile__label" htmlFor="email">
             Почта
             <input
               className="profile__input"
@@ -59,11 +59,11 @@ function Profile({ onExit }) {
         </form>
       ) : (
         <div className="profile__form">
-          <div className="profile__label" for="name">
+          <div className="profile__label" htmlFor="name">
             Имя
             <span className="profile__input">Виталий</span>
           </div>
-          <div className="profile__label" for="email">
+          <div className="profile__label" htmlFor="email">
             E-mail
             <span className="profile__input">pochta@yandex.ru</span>
           </div>
@@ -80,7 +80,7 @@ function Profile({ onExit }) {
           </div>
         </div>
       )}
-    </section>
+    </main>
   );
 }
 

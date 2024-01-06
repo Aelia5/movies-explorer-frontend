@@ -2,7 +2,7 @@ import "./SearchForm.css";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import React from "react";
 
-function SearchForm(onSubmit) {
+function SearchForm({ onSubmit }) {
   const [movie, setMovie] = React.useState("");
 
   function handleSearchMovie(e) {

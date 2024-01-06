@@ -1,10 +1,12 @@
 import React from "react";
 import "./Header.css";
 import "../../blocks/logo.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 
 function Header({ loggedIn, className }) {
+  const navigate = useNavigate();
+
   const [menuOpened, setMenuOpened] = React.useState(false);
 
   function toggleBurgerMenu() {
@@ -13,12 +15,12 @@ function Header({ loggedIn, className }) {
 
   return (
     <header className={`header ${className}`}>
-      <Link to="/">
-        <button className="logo"></button>
-      </Link>
+      <button
+        className="logo"
+        onClick={() => navigate("/", { replace: true })}
+      ></button>
       {loggedIn ? (
         <>
-          {" "}
           <div
             className={`header__menu header__menu_authorized ${
               menuOpened ? "header__menu_opened" : ""
@@ -35,7 +37,7 @@ function Header({ loggedIn, className }) {
               onClick={toggleBurgerMenu}
             >
               <p className="header__link">Аккаунт</p>
-              <button class="header__profile-button" />
+              <button className="header__profile-button" />
             </Link>
           </div>
           <button

@@ -29,7 +29,7 @@ function MoviesCardList({ isSaved }) {
   const movieImageToRender = movieImages.slice(0, cardsNumber);
 
   return (
-    <section aria-label="Список фильмов" className="movies-cardlist">
+    <ul aria-label="Список фильмов" className="movies-cardlist">
       {movieImageToRender.map((movieImage) => (
         <MoviesCard
           key={movieImage._id}
@@ -37,7 +37,7 @@ function MoviesCardList({ isSaved }) {
           isSaved={isSaved}
         />
       ))}
-    </section>
+    </ul>
   );
 }
 

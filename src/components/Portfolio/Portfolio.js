@@ -7,7 +7,7 @@ function Portfolio() {
       <h2 className="portfolio__title">Портфолио</h2>
       <a
         className="portfolio__link"
-        href="https://github.com/Aelia5/how-to-learn"
+        href="https://aelia5.github.io/how-to-learn/"
         target="_blank"
         rel="noreferrer"
       >
@@ -16,7 +16,7 @@ function Portfolio() {
       </a>
       <a
         className="portfolio__link"
-        href="https://github.com/Aelia5/russian-travel"
+        href="https://aelia5.github.io/russian-travel/"
         target="_blank"
         rel="noreferrer"
       >

@@ -2,9 +2,11 @@ import "./Login.css";
 import "../../blocks/logo.css";
 import "../../blocks/form.css";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = React.useState("pochta@yandex.ru");
   function handleEmailChange(e) {
     setEmail(e.target.value);
@@ -16,11 +18,14 @@ function Login() {
   }
 
   return (
-    <section className="login">
-      <div className="logo login__logo"></div>
+    <main className="login">
+      <button
+        className="logo login__logo"
+        onClick={() => navigate("/", { replace: true })}
+      ></button>
       <h2 className="form__title login__title">Рады видеть!</h2>
       <form className="form">
-        <label for="email" className="form__label">
+        <label htmlFor="email" className="form__label">
           E-mail
         </label>
         <input
@@ -33,7 +38,7 @@ function Login() {
           required
         ></input>
         <p className="form__input-error">Что-то пошло не так...</p>
-        <label for="password" className="form__label">
+        <label htmlFor="password" className="form__label">
           Пароль
         </label>
         <input
@@ -61,7 +66,7 @@ function Login() {
           Регистрация
         </Link>
       </p>
-    </section>
+    </main>
   );
 }
 
