@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
-import { Routes, Route, Navigate } from "react-router-dom";
+import "../../blocks/not-found.css";
+import { Routes, Route, Navigate, useNavigate, Link } from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
@@ -15,6 +16,8 @@ function App() {
   function logOut() {
     setLoggedIn(false);
   }
+
+  const navigate = useNavigate();
 
   return (
     <div className="app">
@@ -70,7 +73,9 @@ function App() {
             )
           }
         />
-        <Route path="/signin" element={
+        <Route
+          path="/signin"
+          element={
             loggedIn ? (
               <>
                 <Navigate to="/profile" replace />
@@ -78,7 +83,8 @@ function App() {
             ) : (
               <Login />
             )
-          } />
+          }
+        />
         <Route
           path="/signup"
           element={
@@ -91,7 +97,21 @@ function App() {
             )
           }
         />
-        <Route path="/*" element={<div>404</div>} />
+        <Route
+          path="/*"
+          element={
+            <main className="not-found">
+              <h2 className="not-found__title">404</h2>
+              <p className="not-fount__text">Страница не найдена</p>
+              <button
+                className="not-found__button"
+                onClick={() => navigate(-1)}
+              >
+                Назад
+              </button>
+            </main>
+          }
+        />
       </Routes>
     </div>
   );
