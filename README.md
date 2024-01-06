@@ -4,11 +4,7 @@
 
 ## Автор: Ольга Любимова
 
-<!--## [Ссылка на репозиторий](https://github.com/Aelia5/movies-explorer-frontend)-->
-
-## Макет
-
-<!--## [Ссылка на макет (dark-5)](https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/Дипломный-проект?type=design&node-id=1-11614&mode=design)-->
+## [Ссылка на макет (dark-5)](https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/Дипломный-проект?type=design&node-id=1-11614&mode=design)
 
 **Реализованы следующие технологии:**
 
