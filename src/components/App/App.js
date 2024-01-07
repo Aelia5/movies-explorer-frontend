@@ -1,6 +1,5 @@
-import React from "react";
 import "./App.css";
-import "../../blocks/not-found.css";
+import React from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -101,14 +100,16 @@ function App() {
           path="/*"
           element={
             <main className="not-found">
-              <h2 className="not-found__title">404</h2>
-              <p className="not-fount__text">Страница не найдена</p>
-              <button
-                className="not-found__button"
-                onClick={() => navigate(-1)}
-              >
-                Назад
-              </button>
+              <section>
+                <h1 className="not-found__title">404</h1>
+                <p className="not-found__text">Страница не найдена</p>
+                <button
+                  className="not-found__button"
+                  onClick={() => navigate(-1)}
+                >
+                  Назад
+                </button>
+              </section>
             </main>
           }
         />

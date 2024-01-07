@@ -1,7 +1,5 @@
-import "./AboutMe.css";
-import "../../blocks/section-title.css";
-import "../../blocks/section.css";
 import myPhoto from "../../images/ol1.jpg";
+import "./AboutMe.css";
 
 function AboutMe() {
   return (

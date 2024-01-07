@@ -16,6 +16,15 @@
   background-color: #073042;
 }
 
+.header__overlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: rgba(32, 32, 32, 0.3);
+}
+
 .header__menu {
   display: flex;
   flex-direction: row;
@@ -36,6 +45,7 @@
   align-items: center;
   gap: 7px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .header__link {
@@ -62,7 +72,7 @@
   background-size: 10px;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: transparent;
+  background-color: #313131;
   cursor: pointer;
   border-radius: 50%;
   border: none;
@@ -151,16 +161,14 @@
     right: 0px;
     flex-direction: column;
     width: 520px;
-    height: 1024px;
+    height: 100vh;
     background-color: #202020;
     gap: 0;
   }
 
   .header__account {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 7px;
+    padding-left: 11px;
+    box-sizing: border-box;
   }
 
   .header__link {
@@ -189,7 +197,7 @@
   }
 
   .header__menu_authorized {
-    height: 780px;
+    height: 100vh;
   }
 
   .header__menu_unauthorized {
@@ -203,7 +211,8 @@
   }
 
   .header__link {
-    font-size: 10px;
+    font-size: 13px;
+    line-height: 12px;
   }
 
   .header__login-button {

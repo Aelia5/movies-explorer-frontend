@@ -12,8 +12,8 @@ function MoviesCard({ movieImage, isSaved }) {
     <li className="movies-card">
       <img
         className="movies-card__image"
-        alt="Тестовое фото"
-        src={movieImage}
+        alt={movieImage.name}
+        src={movieImage.link}
       ></img>
       <h2 className="movies-card__title">33 слова о дизайне</h2>
       {isSaved ? (

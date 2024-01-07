@@ -1,5 +1,4 @@
 import "./Portfolio.css";
-import "../../blocks/section.css";
 
 function Portfolio() {
   return (
@@ -12,7 +11,7 @@ function Portfolio() {
         rel="noreferrer"
       >
         <p className="portfolio__link-text">Статичный сайт</p>
-        <button className="portfolio__link-button">↗</button>
+        <div className="portfolio__link-button">↗</div>
       </a>
       <a
         className="portfolio__link"
@@ -21,7 +20,7 @@ function Portfolio() {
         rel="noreferrer"
       >
         <p className="portfolio__link-text">Адаптивный сайт</p>
-        <button className="portfolio__link-button">↗</button>
+        <div className="portfolio__link-button">↗</div>
       </a>
       <a
         className="portfolio__link"
@@ -30,7 +29,7 @@ function Portfolio() {
         rel="noreferrer"
       >
         <p className="portfolio__link-text">Одностраничное приложение</p>
-        <button className="portfolio__link-button">↗</button>
+        <div className="portfolio__link-button">↗</div>
       </a>
     </section>
   );

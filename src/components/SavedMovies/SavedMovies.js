@@ -2,13 +2,13 @@ import "./SavedMovies.css";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-function Movies() {
+function SavedMovies() {
   return (
-    <div className="saved-movies">
+    <main className="saved-movies">
       <SearchForm />
       <MoviesCardList isSaved={true} />
-    </div>
+    </main>
   );
 }
 
-export default Movies;
+export default SavedMovies;

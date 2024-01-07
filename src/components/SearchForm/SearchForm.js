@@ -10,23 +10,25 @@ function SearchForm({ onSubmit }) {
   }
 
   return (
-    <form className="search-form" name="search-form" onSubmit={onSubmit}>
-      <div className="search-form__line">
-        <input
-          className="search-form__input"
-          type="text"
-          name="movie"
-          id="movie"
-          onChange={handleSearchMovie}
-          placeholder="Фильм"
-          minLength="2"
-          maxLength="30"
-          required
-        />
-        <button className="search-form__submit-button" type="submit" />
-      </div>
-      <FilterCheckbox />
-    </form>
+    <section aria-label="Форма поиска фильмов">
+      <form className="search-form" name="search-form" onSubmit={onSubmit}>
+        <div className="search-form__line">
+          <input
+            className="search-form__input"
+            type="text"
+            name="movie"
+            id="movie"
+            onChange={handleSearchMovie}
+            placeholder="Фильм"
+            minLength="2"
+            maxLength="30"
+            required
+          />
+          <button className="search-form__submit-button" type="submit" />
+        </div>
+        <FilterCheckbox />
+      </form>
+    </section>
   );
 }
 

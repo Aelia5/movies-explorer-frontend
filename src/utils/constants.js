@@ -16,22 +16,22 @@ import movieImageFifteen from "../images/movies/movie15.png";
 import movieImageSixteen from "../images/movies/movie16.png";
 
 const movieImages = [
-  { _id: 1, link: movieImageOne },
-  { _id: 2, link: movieImageTwo },
-  { _id: 3, link: movieImageThree },
-  { _id: 4, link: movieImageFour },
-  { _id: 5, link: movieImageFive },
-  { _id: 6, link: movieImageSix },
-  { _id: 7, link: movieImageSeven },
-  { _id: 8, link: movieImageEight },
-  { _id: 9, link: movieImageNine },
-  { _id: 10, link: movieImageTen },
-  { _id: 11, link: movieImageEleven },
-  { _id: 12, link: movieImageTwelwe },
-  { _id: 13, link: movieImageThirteen },
-  { _id: 14, link: movieImageFourteen },
-  { _id: 15, link: movieImageFifteen },
-  { _id: 16, link: movieImageSixteen },
+  { _id: 1, link: movieImageOne, name: "Фильм 1" },
+  { _id: 2, link: movieImageTwo, name: "Фильм 2" },
+  { _id: 3, link: movieImageThree, name: "Фильм 3" },
+  { _id: 4, link: movieImageFour, name: "Фильм 4" },
+  { _id: 5, link: movieImageFive, name: "Фильм 5" },
+  { _id: 6, link: movieImageSix, name: "Фильм 6" },
+  { _id: 7, link: movieImageSeven, name: "Фильм 7" },
+  { _id: 8, link: movieImageEight, name: "Фильм 8" },
+  { _id: 9, link: movieImageNine, name: "Фильм 9" },
+  { _id: 10, link: movieImageTen, name: "Фильм 10" },
+  { _id: 11, link: movieImageEleven, name: "Фильм 11" },
+  { _id: 12, link: movieImageTwelwe, name: "Фильм 12" },
+  { _id: 13, link: movieImageThirteen, name: "Фильм 13" },
+  { _id: 14, link: movieImageFourteen, name: "Фильм 14" },
+  { _id: 15, link: movieImageFifteen, name: "Фильм 15" },
+  { _id: 16, link: movieImageSixteen, name: "Фильм 16" },
 ];
 
 export default movieImages;

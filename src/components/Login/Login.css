@@ -9,15 +9,18 @@
   padding: 70px 0;
 }
 
+.login__container {
+  width: 396px;
+  align-items: center;
+  justify-items: flex-start;
+}
+
 .login__logo {
   align-self: flex-start;
-  margin-left: calc((100vw - 396px) / 2);
 }
 
 .login__title {
-  margin: 40px 0;
-  align-self: flex-start;
-  margin-left: calc((100vw - 396px) / 2);
+  margin-top: 40px;
 }
 
 .login__submit-button {
@@ -41,9 +44,12 @@
     padding: 56px 0 30px;
   }
 
+  .login__container {
+    width: 260px;
+  }
+
   .login__logo {
     align-self: center;
-    margin-left: 0;
   }
 
   .login__title {

@@ -1,6 +1,4 @@
 import "./AboutProject.css";
-import "../../blocks/section-title.css";
-import "../../blocks/section.css";
 
 function AboutProject() {
   return (
@@ -30,16 +28,16 @@ function AboutProject() {
         </div>
       </div>
       <div className="about-project__timetable">
-        <div className="about-project__cell about-project__cell_type_backend">
+        <span className="about-project__cell about-project__cell_type_backend">
           1 неделя
-        </div>
-        <div className="about-project__cell">4 недели</div>
-        <div className="about-project__cell about-project__cell_type_caption">
+        </span>
+        <span className="about-project__cell">4 недели</span>
+        <span className="about-project__cell about-project__cell_type_caption">
           Back-end
-        </div>
-        <div className="about-project__cell about-project__cell_type_caption">
+        </span>
+        <span className="about-project__cell about-project__cell_type_caption">
           Front-end
-        </div>
+        </span>
       </div>
     </section>
   );

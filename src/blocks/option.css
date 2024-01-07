@@ -1,0 +1,26 @@
+.option {
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.94px;
+  color: #8b8b8b;
+  text-align: center;
+}
+
+.option__link {
+  color: #4285f4;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.option__link:hover {
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 426px) {
+  .option {
+    font-size: 12px;
+    line-height: 14.52px;
+  }
+}
