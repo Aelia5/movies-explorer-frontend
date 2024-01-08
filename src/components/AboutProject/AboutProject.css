@@ -1,0 +1,119 @@
+.about-project {
+  display: flex;
+  flex-direction: column;
+  background-color: #202020;
+}
+
+.about-project__table {
+  margin: 70px 0 110px;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.about-project__title {
+  margin: 0 0 26px;
+  padding: 0;
+  max-width: 550px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24.2px;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+
+.about-project__text {
+  margin: 0;
+  padding: 0;
+  max-width: 550px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #fff;
+}
+
+.about-project__timetable {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-template-rows: 36px 17px;
+  row-gap: 14px;
+  max-width: 1140px;
+  align-items: stretch;
+}
+
+.about-project__cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 36px;
+  color: #fff;
+  background-color: #303030;
+}
+
+.about-project__cell_type_caption {
+  font-weight: 500;
+  color: #8b8b8b;
+  background-color: transparent;
+}
+
+.about-project__cell_type_backend {
+  color: #000;
+  background-color: #3ddc84;
+}
+
+@media screen and (max-width: 768px) {
+  .about-project__table {
+    margin-bottom: 93px;
+    gap: 30px;
+  }
+
+  .about-project__title {
+    margin-bottom: 22px;
+  }
+
+  .about-project__text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about-project__timetable {
+    grid-template-columns: 140px auto;
+  }
+
+  .about-project__cell_type_caption {
+    font-weight: 400;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  .about-project__table {
+    flex-direction: column;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    gap: 56px;
+  }
+
+  .about-project__title {
+    margin-bottom: 16px;
+    font-size: 18px;
+    line-height: 21.78px;
+  }
+
+  .about-project__text {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .about-project__timetable {
+    grid-template-columns: 100px auto;
+    grid-template-rows: 35px 14px;
+    row-gap: 10px;
+  }
+
+  .about-project__cell {
+    font-size: 11px;
+    line-height: 13.31px;
+  }
+}
