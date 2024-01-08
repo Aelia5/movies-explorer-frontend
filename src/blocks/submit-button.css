@@ -8,15 +8,16 @@
   font-size: 14px;
   line-height: 16.94px;
   font-weight: 500;
-  cursor: pointer;
+
 }
 
 .submit-button_active {
+  cursor: pointer;
   background-color: #4285f4;
   color: #fff;
 }
 
-.submit-button:hover {
+.submit-button_active:hover {
   opacity: 0.8;
 }
 

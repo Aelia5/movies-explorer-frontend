@@ -1,23 +1,20 @@
 import "./Register.css";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useFormWithValidation } from "../Validation/Validation";
 
 function Register() {
   const navigate = useNavigate();
 
-  const [name, setName] = React.useState("Виталий");
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation();
 
-  const [email, setEmail] = React.useState("pochta@yandex.ru");
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
-
-  const [password, setPassword] = React.useState("pochta@yandex.ru");
-  function handlePasswordChange(e) {
-    setPassword(e.target.value);
+  function onSubmit(e) {
+    e.preventDefault();
+    if (isValid) {
+      resetForm();
+      console.log("ok");
+    }
   }
 
   return (
@@ -29,7 +26,7 @@ function Register() {
         ></button>
 
         <h1 className="form-title register__title">Добро пожаловать!</h1>
-        <form className="form">
+        <form className="form" onSubmit={onSubmit} noValidate>
           <label htmlFor="name" className="form__label">
             Имя
           </label>
@@ -41,10 +38,13 @@ function Register() {
             name="name"
             minLength="2"
             maxLength="30"
-            onChange={handleNameChange}
+            pattern="[A-Za-zА-Яа-яЁё\s\-]+$"
+            onChange={handleChange}
+            title="Только кириллица, латиница, дефисы и пробелы"
+            value={values.name}
             required
           ></input>
-          <p className="form__input-error">Что-то пошло не так...</p>
+          <p className="form__input-error">{errors.name}</p>
           <label htmlFor="email" className="form__label">
             E-mail
           </label>
@@ -54,30 +54,37 @@ function Register() {
             placeholder="Введите вашу электронную почту"
             id="email"
             name="email"
-            onChange={handleEmailChange}
+            onChange={handleChange}
+            value={values.email}
             required
           ></input>
-          <p className="form__input-error">Что-то пошло не так...</p>
+          <p className="form__input-error">{errors.email}</p>
           <label htmlFor="password" className="form__label">
             Пароль
           </label>
           <input
-            className="form__input form__input_invalid"
+            className="form__input"
             type="password"
             placeholder="Введите ваш пароль"
             id="password"
             name="password"
             minLength="7"
-            onChange={handlePasswordChange}
+            onChange={handleChange}
+            value={values.password}
             required
           ></input>
-          <p className="form__input-error form__input-error_visible">
-            Что-то пошло не так...
+          <p className="form__input-error">
+            {errors.password}
           </p>
           <p className="api-error register__api-error">
             При регистрации пользователя произошла ошибка.
           </p>
-          <button className="submit-button submit-button_active register__submit-button">
+          <button
+            type="submit"
+            className={`register__submit-button submit-button ${
+              isValid && "submit-button_active"
+            } `}
+          >
             Зарегистрироваться
           </button>
         </form>

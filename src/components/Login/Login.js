@@ -1,21 +1,23 @@
 import "./Login.css";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useFormWithValidation } from "../Validation/Validation";
 
 function Login() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = React.useState("pochta@yandex.ru");
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation();
 
-  const [password, setPassword] = React.useState("pochta@yandex.ru");
-  function handlePasswordChange(e) {
-    setPassword(e.target.value);
-  }
+    function onSubmit(e) {
+      e.preventDefault();
+      if (isValid) {
+        resetForm();
+        console.log("ok");
+      }
+    }
 
-  return (
+    return (
     <main className="login">
       <section className="login__container">
         <button
@@ -24,7 +26,7 @@ function Login() {
         ></button>
 
         <h1 className="form-title login__title">Рады видеть!</h1>
-        <form className="form">
+        <form className="form" onSubmit={onSubmit} noValidate>
           <label htmlFor="email" className="form__label">
             E-mail
           </label>
@@ -34,10 +36,11 @@ function Login() {
             placeholder="Введите вашу электронную почту"
             id="email"
             name="email"
-            onChange={handleEmailChange}
+            onChange={handleChange}
+            value={values.email}
             required
           ></input>
-          <p className="form__input-error">Что-то пошло не так...</p>
+          <p className="form__input-error">{errors.email}</p>
           <label htmlFor="password" className="form__label">
             Пароль
           </label>
@@ -48,15 +51,17 @@ function Login() {
             id="password"
             name="password"
             minLength="7"
-            onChange={handlePasswordChange}
+            onChange={handleChange}
             required
           ></input>
-          <p className="form__input-error">Что-то пошло не так...</p>
+          <p className="form__input-error">{errors.password}</p>
           <p className="api-error login__api-error">
             При авторизации произошла ошибка. Токен не передан или передан не в
             том формате.
           </p>
-          <button className="submit-button submit-button_active login__submit-button">
+          <button className={`register__submit-button submit-button ${
+              isValid && "submit-button_active"
+            } `}>
             Войти
           </button>
         </form>
