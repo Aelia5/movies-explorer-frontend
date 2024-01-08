@@ -18,8 +18,8 @@ function Profile({ onExit }) {
   }
 
   return (
-    <main className="profile">
-      <section>
+    <main>
+      <section className="profile">
         <h1 className="form-title profile__title">Привет, Виталий!</h1>
         {isEdited ? (
           <form className="profile__form">

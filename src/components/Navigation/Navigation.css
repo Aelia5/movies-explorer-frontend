@@ -35,7 +35,7 @@
     flex-direction: column;
     align-items: center;
     gap: 21px;
-    margin-bottom: 621px;
+    margin-bottom: calc(100vh - 406px);
   }
 
   .navigation__link {
@@ -57,7 +57,7 @@
 
 @media screen and (max-width: 426px) {
   .navigation {
-    margin-bottom: 437px;
+    margin-bottom: calc(100vh - 340px);
     gap: 17px;
   }
 }

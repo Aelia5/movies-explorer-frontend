@@ -10,6 +10,8 @@
 }
 
 .login__container {
+  display: flex;
+  flex-direction: column;
   width: 396px;
   align-items: center;
   justify-items: flex-start;
@@ -20,7 +22,8 @@
 }
 
 .login__title {
-  margin-top: 40px;
+  margin: 40px 0;
+  align-self: flex-start;
 }
 
 .login__submit-button {

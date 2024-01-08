@@ -9,6 +9,8 @@
 }
 
 .register__container {
+  display: flex;
+  flex-direction: column;
   width: 396px;
   align-items: center;
   justify-items: flex-start;
@@ -19,7 +21,7 @@
 }
 
 .register__title {
-  margin-top: 40px;
+  margin: 40px 0;
   align-self: flex-start;
 }
 
@@ -45,6 +47,7 @@
   }
   .register__container {
     width: 260px;
+
   }
 
   .register__logo {
