@@ -9,7 +9,7 @@ function Register({ handleRegistrationSubmit, apiError, changeApiError }) {
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
 
-    const [buttonDisabled, setButtonDisabled] = React.useState(false);
+  const [buttonDisabled, setButtonDisabled] = React.useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -28,8 +28,9 @@ function Register({ handleRegistrationSubmit, apiError, changeApiError }) {
 
   React.useEffect(() => {
     if (apiError) {
-    changeApiError("")}
-  }, [values])
+      changeApiError("");
+    }
+  }, [values]);
 
   return (
     <main className="register">

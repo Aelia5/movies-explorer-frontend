@@ -12,20 +12,21 @@ import Login from "../Login/Login";
 import MainApi from "../../utils/MainApi";
 
 function App() {
-  const [loggedIn, setLoggedIn] = React.useState(true);
-  function logOut() {
-    setLoggedIn(false);
+  const [loggedIn, setLoggedIn] = React.useState(false);
+
+  const [registerError, setRegisterError] = React.useState("");
+  function changeRegisterError(errorMessage) {
+    setRegisterError(errorMessage);
   }
 
-  const [apiError, setApiError] = React.useState("");
-  function changeApiError(errorMessage) {
-
-    setApiError(errorMessage);
-      }
+  const [loginError, setLoginError] = React.useState("");
+  function changeLoginError(errorMessage) {
+    setLoginError(errorMessage);
+  }
 
   const navigate = useNavigate();
 
-  const { register } = MainApi();
+  const { register, login, getUser } = MainApi();
 
   function handleRegistrationSubmit(data, resetForm) {
     register(data)
@@ -37,14 +38,64 @@ function App() {
       })
       .catch((err) => {
         if (err === 409) {
-          setApiError("Пользователь с таким email уже существует.");
+          setRegisterError("Пользователь с таким email уже существует.");
         } else {
-          setApiError("При регистрации пользователя произошла ошибка");
-        };
-
-
+          setRegisterError("При регистрации пользователя произошла ошибка");
+        }
       });
   }
+
+  function handleLoginSubmit(data, resetForm) {
+    login(data)
+      .then((res) => {
+        localStorage.setItem("token", res.token);
+      })
+      .then(() => {
+        console.log(localStorage.getItem("token"));
+        resetForm();
+        authorize();
+      })
+      .catch((err) => {
+        if (err === 401) {
+          setLoginError("Вы ввели неправильный логин или пароль");
+        } else {
+          setLoginError(
+            "При авторизации произошла ошибка. Токен не передан или передан не в том формате"
+          );
+        }
+      });
+  }
+
+  // Нужно сделать обработку ошибки с некорректным токеном при авторизации - получать данные пользователя
+  // сразу после получения токена, а если приходит ошибка, выдавать ошибку
+
+  function signOut() {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    navigate("/", { replace: true });
+  }
+
+  function authorize() {
+    setLoggedIn(true);
+    navigate("/movies", { replace: true });
+  }
+
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      getUser(token)
+        .then((res) => {
+          return res;
+        })
+        .then((userData) => {
+          authorize();
+          console.log(userData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
 
   return (
     <div className="app">
@@ -93,7 +144,7 @@ function App() {
             loggedIn ? (
               <>
                 <Header className="" loggedIn={loggedIn} />
-                <Profile onExit={logOut} />
+                <Profile onExit={signOut} />
               </>
             ) : (
               <Navigate to="/signup" replace />
@@ -108,7 +159,11 @@ function App() {
                 <Navigate to="/profile" replace />
               </>
             ) : (
-              <Login />
+              <Login
+                handleLoginSubmit={handleLoginSubmit}
+                apiError={loginError}
+                changeApiError={changeLoginError}
+              />
             )
           }
         />
@@ -120,7 +175,11 @@ function App() {
                 <Navigate to="/profile" replace />
               </>
             ) : (
-              <Register handleRegistrationSubmit={handleRegistrationSubmit} apiError={apiError} changeApiError={changeApiError}/>
+              <Register
+                handleRegistrationSubmit={handleRegistrationSubmit}
+                apiError={registerError}
+                changeApiError={changeRegisterError}
+              />
             )
           }
         />

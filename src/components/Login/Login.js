@@ -3,21 +3,39 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormWithValidation } from "../Validation/Validation";
 
-function Login({handleLoginSubmit, apiError}) {
+function Login({ handleLoginSubmit, apiError, changeApiError }) {
   const navigate = useNavigate();
 
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
 
-    function handleSubmit(e) {
-      e.preventDefault();
-      resetForm();
-      if (isValid) {
-        handleLoginSubmit()
-      }
-    }
+  const [buttonDisabled, setButtonDisabled] = React.useState(false);
 
-    return (
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (isValid) {
+      handleLoginSubmit(values, resetForm);
+    }
+  }
+
+  React.useEffect(() => {
+    if (apiError) {
+      setButtonDisabled(true);
+    } else {
+      setButtonDisabled(false);
+    }
+  }, [apiError]);
+
+  React.useEffect(() => {
+    if (apiError) {
+      changeApiError("");
+    }
+  }, [values]);
+
+
+
+  return (
     <main className="login">
       <section className="login__container">
         <button
@@ -37,7 +55,7 @@ function Login({handleLoginSubmit, apiError}) {
             id="email"
             name="email"
             onChange={handleChange}
-            value={values.email}
+            value={values.email || ""}
             required
           ></input>
           <p className="form__input-error">{errors.email}</p>
@@ -52,17 +70,15 @@ function Login({handleLoginSubmit, apiError}) {
             name="password"
             minLength="7"
             onChange={handleChange}
+            value={values.password || ""}
             required
           ></input>
           <p className="form__input-error">{errors.password}</p>
-          <p className="api-error login__api-error">
-            При авторизации произошла ошибка. Токен не передан или передан не в
-            том формате.
-          </p>
-          <button className={`register__submit-button submit-button ${
-              isValid && "submit-button_active"
-            } `}
-            disabled={!isValid}>
+          <p className="api-error login__api-error">{apiError}</p>
+          <button
+            className="login__submit-button submit-button"
+            disabled={!isValid || buttonDisabled}
+          >
             Войти
           </button>
         </form>
