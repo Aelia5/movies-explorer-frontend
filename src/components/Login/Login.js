@@ -3,17 +3,17 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormWithValidation } from "../Validation/Validation";
 
-function Login() {
+function Login({handleLoginSubmit, apiError}) {
   const navigate = useNavigate();
 
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
 
-    function onSubmit(e) {
+    function handleSubmit(e) {
       e.preventDefault();
+      resetForm();
       if (isValid) {
-        resetForm();
-        console.log("ok");
+        handleLoginSubmit()
       }
     }
 
@@ -26,7 +26,7 @@ function Login() {
         ></button>
 
         <h1 className="form-title login__title">Рады видеть!</h1>
-        <form className="form" onSubmit={onSubmit} noValidate>
+        <form className="form" onSubmit={handleSubmit} noValidate>
           <label htmlFor="email" className="form__label">
             E-mail
           </label>
@@ -61,7 +61,8 @@ function Login() {
           </p>
           <button className={`register__submit-button submit-button ${
               isValid && "submit-button_active"
-            } `}>
+            } `}
+            disabled={!isValid}>
             Войти
           </button>
         </form>

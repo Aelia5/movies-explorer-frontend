@@ -53,7 +53,7 @@
 }
 
 .profile__options {
-  margin: 204px 0 70px;
+  margin: calc(100vh - 516px) 0 70px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -109,6 +109,6 @@
   }
 
   .profile__options {
-    margin-top: 362px;
+    margin-top: calc(100vh - 418px);
   }
 }

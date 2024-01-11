@@ -9,6 +9,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
+import MainApi from "../../utils/MainApi";
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(true);
@@ -16,7 +17,34 @@ function App() {
     setLoggedIn(false);
   }
 
+  const [apiError, setApiError] = React.useState("");
+  function changeApiError(errorMessage) {
+
+    setApiError(errorMessage);
+      }
+
   const navigate = useNavigate();
+
+  const { register } = MainApi();
+
+  function handleRegistrationSubmit(data, resetForm) {
+    register(data)
+      .then((res) => {
+        resetForm();
+
+        setLoggedIn(true);
+        navigate("/movies", { replace: true });
+      })
+      .catch((err) => {
+        if (err === 409) {
+          setApiError("Пользователь с таким email уже существует.");
+        } else {
+          setApiError("При регистрации пользователя произошла ошибка");
+        };
+
+
+      });
+  }
 
   return (
     <div className="app">
@@ -92,7 +120,7 @@ function App() {
                 <Navigate to="/profile" replace />
               </>
             ) : (
-              <Register />
+              <Register handleRegistrationSubmit={handleRegistrationSubmit} apiError={apiError} changeApiError={changeApiError}/>
             )
           }
         />

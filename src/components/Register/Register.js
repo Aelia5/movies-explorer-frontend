@@ -3,19 +3,33 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormWithValidation } from "../Validation/Validation";
 
-function Register() {
+function Register({ handleRegistrationSubmit, apiError, changeApiError }) {
   const navigate = useNavigate();
 
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
 
-  function onSubmit(e) {
+    const [buttonDisabled, setButtonDisabled] = React.useState(false);
+
+  function handleSubmit(e) {
     e.preventDefault();
     if (isValid) {
-      resetForm();
-      console.log("ok");
+      handleRegistrationSubmit(values, resetForm);
     }
   }
+
+  React.useEffect(() => {
+    if (apiError) {
+      setButtonDisabled(true);
+    } else {
+      setButtonDisabled(false);
+    }
+  }, [apiError]);
+
+  React.useEffect(() => {
+    if (apiError) {
+    changeApiError("")}
+  }, [values])
 
   return (
     <main className="register">
@@ -26,7 +40,7 @@ function Register() {
         ></button>
 
         <h1 className="form-title register__title">Добро пожаловать!</h1>
-        <form className="form" onSubmit={onSubmit} noValidate>
+        <form className="form" onSubmit={handleSubmit} noValidate>
           <label htmlFor="name" className="form__label">
             Имя
           </label>
@@ -41,7 +55,7 @@ function Register() {
             pattern="[A-Za-zА-Яа-яЁё\s\-]+$"
             onChange={handleChange}
             title="Только кириллица, латиница, дефисы и пробелы"
-            value={values.name}
+            value={values.name || ""}
             required
           ></input>
           <p className="form__input-error">{errors.name}</p>
@@ -55,7 +69,7 @@ function Register() {
             id="email"
             name="email"
             onChange={handleChange}
-            value={values.email}
+            value={values.email || ""}
             required
           ></input>
           <p className="form__input-error">{errors.email}</p>
@@ -70,20 +84,15 @@ function Register() {
             name="password"
             minLength="7"
             onChange={handleChange}
-            value={values.password}
+            value={values.password || ""}
             required
           ></input>
-          <p className="form__input-error">
-            {errors.password}
-          </p>
-          <p className="api-error register__api-error">
-            При регистрации пользователя произошла ошибка.
-          </p>
+          <p className="form__input-error">{errors.password}</p>
+          <p className="api-error register__api-error">{apiError}</p>
           <button
             type="submit"
-            className={`register__submit-button submit-button ${
-              isValid && "submit-button_active"
-            } `}
+            className="register__submit-button submit-button"
+            disabled={!isValid || buttonDisabled}
           >
             Зарегистрироваться
           </button>
