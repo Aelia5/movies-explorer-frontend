@@ -12,6 +12,12 @@ import Login from "../Login/Login";
 import MainApi from "../../utils/MainApi";
 
 function App() {
+  const navigate = useNavigate();
+
+  const { register, login, getUser, editProfileData } = MainApi();
+
+  const [currentUser, setCurrentUser] = React.useState({});
+
   const [loggedIn, setLoggedIn] = React.useState(false);
 
   const [registerError, setRegisterError] = React.useState("");
@@ -24,9 +30,10 @@ function App() {
     setLoginError(errorMessage);
   }
 
-  const navigate = useNavigate();
-
-  const { register, login, getUser } = MainApi();
+  const [profileError, setProfileError] = React.useState("");
+  function changeProfileError(errorMessage) {
+    setProfileError(errorMessage);
+  }
 
   function handleRegistrationSubmit(data, resetForm) {
     register(data)
@@ -37,11 +44,7 @@ function App() {
         navigate("/movies", { replace: true });
       })
       .catch((err) => {
-        if (err === 409) {
-          setRegisterError("Пользователь с таким email уже существует.");
-        } else {
-          setRegisterError("При регистрации пользователя произошла ошибка");
-        }
+        setRegisterError(err);
       });
   }
 
@@ -49,35 +52,47 @@ function App() {
     login(data)
       .then((res) => {
         localStorage.setItem("token", res.token);
-      })
-      .then(() => {
-        console.log(localStorage.getItem("token"));
-        resetForm();
-        authorize();
+        getUser(res.token)
+          .then((res) => {
+            return res;
+          })
+          .then((userData) => {
+            resetForm();
+            authorize(userData);
+            navigate("/movies", { replace: true });
+          });
       })
       .catch((err) => {
-        if (err === 401) {
-          setLoginError("Вы ввели неправильный логин или пароль");
-        } else {
-          setLoginError(
-            "При авторизации произошла ошибка. Токен не передан или передан не в том формате"
-          );
-        }
+        setLoginError(err);
       });
   }
 
-  // Нужно сделать обработку ошибки с некорректным токеном при авторизации - получать данные пользователя
-  // сразу после получения токена, а если приходит ошибка, выдавать ошибку
+  function handleEditProfileSubmit(data, resetForm, redirect) {
+    editProfileData(data)
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .then(() => {
+        resetForm(data, {}, false);
+        redirect(false);
+      })
+      .catch((err) => {
+        console.log('ошибка')
+        changeProfileError(err);
+        console.log(profileError)
+      });
+  }
 
   function signOut() {
     localStorage.removeItem("token");
+    setCurrentUser({});
     setLoggedIn(false);
     navigate("/", { replace: true });
   }
 
-  function authorize() {
+  function authorize(userData) {
+    setCurrentUser(userData);
     setLoggedIn(true);
-    navigate("/movies", { replace: true });
   }
 
   React.useEffect(() => {
@@ -88,8 +103,7 @@ function App() {
           return res;
         })
         .then((userData) => {
-          authorize();
-          console.log(userData);
+          authorize(userData);
         })
         .catch((err) => {
           console.log(err);
@@ -144,7 +158,13 @@ function App() {
             loggedIn ? (
               <>
                 <Header className="" loggedIn={loggedIn} />
-                <Profile onExit={signOut} />
+                <Profile
+                  user={currentUser}
+                  onExit={signOut}
+                  handleEditProfileSubmit={handleEditProfileSubmit}
+                  apiError={profileError}
+                  changeApiError={changeProfileError}
+                />
               </>
             ) : (
               <Navigate to="/signup" replace />

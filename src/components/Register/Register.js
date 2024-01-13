@@ -9,22 +9,12 @@ function Register({ handleRegistrationSubmit, apiError, changeApiError }) {
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
 
-  const [buttonDisabled, setButtonDisabled] = React.useState(false);
-
-  function handleSubmit(e) {
+    function handleSubmit(e) {
     e.preventDefault();
     if (isValid) {
       handleRegistrationSubmit(values, resetForm);
     }
   }
-
-  React.useEffect(() => {
-    if (apiError) {
-      setButtonDisabled(true);
-    } else {
-      setButtonDisabled(false);
-    }
-  }, [apiError]);
 
   React.useEffect(() => {
     if (apiError) {
@@ -93,7 +83,7 @@ function Register({ handleRegistrationSubmit, apiError, changeApiError }) {
           <button
             type="submit"
             className="register__submit-button submit-button"
-            disabled={!isValid || buttonDisabled}
+            disabled={!isValid || apiError}
           >
             Зарегистрироваться
           </button>

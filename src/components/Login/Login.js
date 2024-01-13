@@ -21,14 +21,6 @@ function Login({ handleLoginSubmit, apiError, changeApiError }) {
 
   React.useEffect(() => {
     if (apiError) {
-      setButtonDisabled(true);
-    } else {
-      setButtonDisabled(false);
-    }
-  }, [apiError]);
-
-  React.useEffect(() => {
-    if (apiError) {
       changeApiError("");
     }
   }, [values]);
@@ -77,7 +69,7 @@ function Login({ handleLoginSubmit, apiError, changeApiError }) {
           <p className="api-error login__api-error">{apiError}</p>
           <button
             className="login__submit-button submit-button"
-            disabled={!isValid || buttonDisabled}
+            disabled={!isValid || apiError}
           >
             Войти
           </button>
