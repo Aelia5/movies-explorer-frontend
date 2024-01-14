@@ -1,8 +1,9 @@
 import "./App.css";
 import React from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-  import Header from "../Header/Header";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import Header from "../Header/Header";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import Movies from "../Movies/Movies";
@@ -78,9 +79,9 @@ function App() {
         redirect(false);
       })
       .catch((err) => {
-        console.log('ошибка')
+        console.log("ошибка");
         changeProfileError(err);
-        console.log(profileError)
+        console.log(profileError);
       });
   }
 
@@ -114,115 +115,120 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-    <div className="app">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Header className="header_type_landing" loggedIn={loggedIn} />
-              <Main></Main>
-              <Footer></Footer>
-            </>
-          }
-        />
-        <Route
-          path="/movies"
-          element={
-            loggedIn ? (
+      <div className="app">
+        <Routes>
+          <Route
+            path="/"
+            element={
               <>
-                <Header className="" loggedIn={loggedIn} />
-                <Movies />
+                <Header className="header_type_landing" loggedIn={loggedIn} />
+                <Main></Main>
+                <Footer></Footer>
+              </>
+            }
+          />
+          <Route
+            path="/movies"
+            element={
+              <>
+                <ProtectedRoute
+                  element={Header}
+                  loggedIn={loggedIn}
+                  className=""
+                />
+                <ProtectedRoute element={Movies} loggedIn={loggedIn} />
                 <Footer />
               </>
-            ) : (
-              <Navigate to="/signup" replace />
-            )
-          }
-        />
-        <Route
-          path="/saved-movies"
-          element={
-            loggedIn ? (
+            }
+          />
+          <Route
+            path="/saved-movies"
+            element={
               <>
-                <Header className="" loggedIn={loggedIn} />
-                <SavedMovies />
+                <ProtectedRoute
+                  element={Header}
+                  loggedIn={loggedIn}
+                  className=""
+                />
+                <ProtectedRoute element={SavedMovies} loggedIn={loggedIn} />
                 <Footer />
               </>
-            ) : (
-              <Navigate to="/signup" replace />
-            )
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            loggedIn ? (
+            }
+          />
+
+          <Route
+            path="/profile"
+            element={
               <>
-                <Header className="" loggedIn={loggedIn} />
-                <Profile
+                <ProtectedRoute
+                  element={Header}
+                  loggedIn={loggedIn}
+                  className=""
+                />
+                <ProtectedRoute
+                  element={Profile}
+                  loggedIn={loggedIn}
                   onExit={signOut}
                   handleEditProfileSubmit={handleEditProfileSubmit}
                   apiError={profileError}
                   changeApiError={changeProfileError}
                 />
+                <Footer />
               </>
-            ) : (
-              <Navigate to="/signup" replace />
-            )
-          }
-        />
-        <Route
-          path="/signin"
-          element={
-            loggedIn ? (
-              <>
-                <Navigate to="/profile" replace />
-              </>
-            ) : (
-              <Login
-                handleLoginSubmit={handleLoginSubmit}
-                apiError={loginError}
-                changeApiError={changeLoginError}
-              />
-            )
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            loggedIn ? (
-              <>
-                <Navigate to="/profile" replace />
-              </>
-            ) : (
-              <Register
-                handleRegistrationSubmit={handleRegistrationSubmit}
-                apiError={registerError}
-                changeApiError={changeRegisterError}
-              />
-            )
-          }
-        />
-        <Route
-          path="/*"
-          element={
-            <main>
-              <section className="not-found">
-                <h1 className="not-found__title">404</h1>
-                <p className="not-found__text">Страница не найдена</p>
-                <button
-                  className="not-found__button"
-                  onClick={() => navigate(-1)}
-                >
-                  Назад
-                </button>
-              </section>
-            </main>
-          }
-        />
-      </Routes>
-    </div>
+            }
+          />
+
+          <Route
+            path="/signin"
+            element={
+              loggedIn ? (
+                <>
+                  <Navigate to="/profile" replace />
+                </>
+              ) : (
+                <Login
+                  handleLoginSubmit={handleLoginSubmit}
+                  apiError={loginError}
+                  changeApiError={changeLoginError}
+                />
+              )
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              loggedIn ? (
+                <>
+                  <Navigate to="/profile" replace />
+                </>
+              ) : (
+                <Register
+                  handleRegistrationSubmit={handleRegistrationSubmit}
+                  apiError={registerError}
+                  changeApiError={changeRegisterError}
+                />
+              )
+            }
+          />
+          <Route
+            path="/*"
+            element={
+              <main>
+                <section className="not-found">
+                  <h1 className="not-found__title">404</h1>
+                  <p className="not-found__text">Страница не найдена</p>
+                  <button
+                    className="not-found__button"
+                    onClick={() => navigate(-1)}
+                  >
+                    Назад
+                  </button>
+                </section>
+              </main>
+            }
+          />
+        </Routes>
+      </div>
     </CurrentUserContext.Provider>
   );
 }
