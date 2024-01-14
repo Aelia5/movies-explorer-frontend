@@ -1,8 +1,11 @@
 import "./Profile.css";
 import React from "react";
 import { useFormWithValidation } from "../Validation/Validation";
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Profile({ user, onExit, apiError, changeApiError, handleEditProfileSubmit }) {
+function Profile({  onExit, apiError, changeApiError, handleEditProfileSubmit }) {
+  const currentUser = React.useContext(CurrentUserContext);
+
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
 
@@ -21,7 +24,7 @@ function Profile({ user, onExit, apiError, changeApiError, handleEditProfileSubm
 
 
   React.useEffect(() => {
-    resetForm(user, {}, false);
+    resetForm(currentUser, {}, false);
   }, []);
 
   React.useEffect(() => {
@@ -33,7 +36,7 @@ function Profile({ user, onExit, apiError, changeApiError, handleEditProfileSubm
   return (
     <main>
       <section className="profile">
-        <h1 className="form-title profile__title">Привет, {user.name}!</h1>
+        <h1 className="form-title profile__title">Привет, {currentUser.name}!</h1>
         {isEdited ? (
           <form className="profile__form" onSubmit={handleSubmit} noValidate>
             <label className="profile__label" htmlFor="name">
@@ -77,11 +80,11 @@ function Profile({ user, onExit, apiError, changeApiError, handleEditProfileSubm
           <div className="profile__form">
             <div className="profile__label profile__label_type_inedited">
               Имя
-              <span className="profile__input">{user.name}</span>
+              <span className="profile__input">{currentUser.name}</span>
             </div>
             <div className="profile__label profile__label_type_inedited">
               E-mail
-              <span className="profile__input">{user.email}</span>
+              <span className="profile__input">{currentUser.email}</span>
             </div>
             <div className="profile__options">
               <button className="profile__option" onClick={openEdit}>

@@ -1,7 +1,8 @@
 import "./App.css";
 import React from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import Header from "../Header/Header";
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+  import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import Movies from "../Movies/Movies";
@@ -112,6 +113,7 @@ function App() {
   }, []);
 
   return (
+    <CurrentUserContext.Provider value={currentUser}>
     <div className="app">
       <Routes>
         <Route
@@ -159,7 +161,6 @@ function App() {
               <>
                 <Header className="" loggedIn={loggedIn} />
                 <Profile
-                  user={currentUser}
                   onExit={signOut}
                   handleEditProfileSubmit={handleEditProfileSubmit}
                   apiError={profileError}
@@ -222,6 +223,7 @@ function App() {
         />
       </Routes>
     </div>
+    </CurrentUserContext.Provider>
   );
 }
 
