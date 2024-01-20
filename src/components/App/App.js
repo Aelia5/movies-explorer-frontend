@@ -12,15 +12,26 @@ import Profile from "../Profile/Profile";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import MainApi from "../../utils/MainApi";
+import MoviesApi from "../../utils/MoviesApi";
 
 function App() {
   const navigate = useNavigate();
 
   const { register, login, getUser, editProfileData } = MainApi();
+  const { getMovies } = MoviesApi();
 
   const [currentUser, setCurrentUser] = React.useState({});
 
   const [loggedIn, setLoggedIn] = React.useState(false);
+
+  const [cards, setCards] = React.useState([]);
+
+  const [searchResults, setSearchResults] = React.useState([]);
+
+  const [isLoading, setIsLoading] = React.useState(false);
+  function switchPreloader (value) {
+setIsLoading(value);
+  }
 
   const [registerError, setRegisterError] = React.useState("");
   function changeRegisterError(errorMessage) {
@@ -35,6 +46,11 @@ function App() {
   const [profileError, setProfileError] = React.useState("");
   function changeProfileError(errorMessage) {
     setProfileError(errorMessage);
+  }
+
+  const [searchError, setSearchError] = React.useState("");
+  function changeSearchError(errorMessage) {
+    setSearchError(errorMessage);
   }
 
   function handleRegistrationSubmit(data, resetForm) {
@@ -79,9 +95,37 @@ function App() {
         redirect(false);
       })
       .catch((err) => {
-        console.log("ошибка");
         changeProfileError(err);
-        console.log(profileError);
+      });
+  }
+ function handleSearchSubmit(query) {
+    getMovies()
+      .then((res) => {
+        setCards(res);
+      })
+      .then(() => {
+        return cards.filter((card) => {
+          const values = Object.values(card);
+          return values.some((value) => {
+            return value.toString().toLowerCase().includes(query.toLowerCase());
+          })
+        })
+      })
+      .then((results) => {
+        if (results.length > 0) {
+          setSearchResults(results);
+        } else {
+          setSearchResults([]);
+          setSearchError('Ничего не найдено')
+        }
+      })
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        if (typeof err === "string") {
+        setSearchError(err);
+      } else console.log(err)
       });
   }
 
@@ -136,7 +180,16 @@ function App() {
                   loggedIn={loggedIn}
                   className=""
                 />
-                <ProtectedRoute element={Movies} loggedIn={loggedIn} />
+                <ProtectedRoute
+                  element={Movies}
+                  loggedIn={loggedIn}
+                  handleSearchSubmit={handleSearchSubmit}
+                  apiError={searchError}
+                  changeApiError={changeSearchError}
+                  searchResults={searchResults}
+                  isLoading={isLoading}
+                  switchPreloader={switchPreloader}
+                />
                 <Footer />
               </>
             }

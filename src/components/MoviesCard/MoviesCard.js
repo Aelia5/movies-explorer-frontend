@@ -1,7 +1,7 @@
 import "./MoviesCard.css";
 import React from "react";
 
-function MoviesCard({ movieImage, isSaved }) {
+function MoviesCard({ movie, isSaved }) {
   const [isLiked, setIsLiked] = React.useState(false);
 
   function toggleLike() {
@@ -12,10 +12,10 @@ function MoviesCard({ movieImage, isSaved }) {
     <li className="movies-card">
       <img
         className="movies-card__image"
-        alt={movieImage.name}
-        src={movieImage.link}
+        alt={movie.nameRU}
+        src={`https://api.nomoreparties.co${movie.image.url}`}
       ></img>
-      <h2 className="movies-card__title">33 слова о дизайне</h2>
+      <h2 className="movies-card__title">{movie.nameRU}</h2>
       {isSaved ? (
         <button className="movies-card__button  movies-card__button_type_delete" />
       ) : (

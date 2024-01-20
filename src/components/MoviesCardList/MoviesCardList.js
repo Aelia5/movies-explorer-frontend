@@ -1,10 +1,10 @@
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
-import movieImages from "../../utils/constants";
 import React from "react";
 
-function MoviesCardList({ isSaved }) {
+function MoviesCardList({ cards, isSaved }) {
   const [width, serWidth] = React.useState(window.innerWidth);
+  console.log(cards);
 
   React.useEffect(() => {
     const handleResizeWindow = () => serWidth(window.innerWidth);
@@ -14,27 +14,27 @@ function MoviesCardList({ isSaved }) {
     };
   }, []);
 
-  let cardsNumber;
+  const [cardsNumber, setCardsNumber] = React.useState(0);
 
-  if (isSaved) {
-    cardsNumber = 3;
-  } else if (width > 990) {
-    cardsNumber = 16;
-  } else if (width > 630) {
-    cardsNumber = 8;
-  } else {
-    cardsNumber = 5;
-  }
+  React.useEffect(() => {
+    if (width > 990) {
+      setCardsNumber(16);
+    } else if (width > 630) {
+      setCardsNumber(8);
+    } else {
+      setCardsNumber(5);
+    }
+  }, [isSaved, width]);
 
-  const movieImageToRender = movieImages.slice(0, cardsNumber);
+  const cardsToRender = cards.slice(0, cardsNumber);
 
   return (
     <section aria-label="Список фильмов">
       <ul className="movies-cardlist">
-        {movieImageToRender.map((movieImage) => (
+        {cardsToRender.map((card) => (
           <MoviesCard
-            key={movieImage._id}
-            movieImage={movieImage}
+            key={card._id}
+            movie={card}
             isSaved={isSaved}
           />
         ))}
