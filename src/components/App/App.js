@@ -22,7 +22,9 @@ function App() {
 
   const [currentUser, setCurrentUser] = React.useState({});
 
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(
+    localStorage.getItem("loggedIn") || false
+  );
 
   const [searchResults, setSearchResults] = React.useState([]);
 
@@ -50,8 +52,6 @@ function App() {
   function changeSearchError(errorMessage) {
     setSearchError(errorMessage);
   }
-
-
 
   function handleRegistrationSubmit(data, resetForm) {
     register(data)
@@ -101,7 +101,6 @@ function App() {
   function handleSearchSubmit(query, checkboxOn) {
     getMovies()
       .then((cards) => {
-
         return cards.filter((card) => {
           const values = [
             card.country,
@@ -143,6 +142,15 @@ function App() {
     setCurrentUser(userData);
     setLoggedIn(true);
   }
+
+  React.useEffect(() => {
+    setLoggedIn(JSON.parse(localStorage.getItem('loggedIn')))
+  }, [])
+
+  React.useEffect(() => {
+    localStorage.setItem("loggedIn", loggedIn)
+  }, [loggedIn]
+  )
 
   React.useEffect(() => {
     const token = localStorage.getItem("token");
@@ -192,7 +200,6 @@ function App() {
                   searchResults={searchResults}
                   isLoading={isLoading}
                   switchPreloader={switchPreloader}
-
                 />
                 <Footer />
               </>
