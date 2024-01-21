@@ -24,13 +24,11 @@ function App() {
 
   const [loggedIn, setLoggedIn] = React.useState(false);
 
-  const [cards, setCards] = React.useState([]);
-
   const [searchResults, setSearchResults] = React.useState([]);
 
   const [isLoading, setIsLoading] = React.useState(false);
-  function switchPreloader (value) {
-setIsLoading(value);
+  function switchPreloader(value) {
+    setIsLoading(value);
   }
 
   const [registerError, setRegisterError] = React.useState("");
@@ -52,6 +50,8 @@ setIsLoading(value);
   function changeSearchError(errorMessage) {
     setSearchError(errorMessage);
   }
+
+
 
   function handleRegistrationSubmit(data, resetForm) {
     register(data)
@@ -98,34 +98,37 @@ setIsLoading(value);
         changeProfileError(err);
       });
   }
- function handleSearchSubmit(query) {
+  function handleSearchSubmit(query, checkboxOn) {
     getMovies()
-      .then((res) => {
-        setCards(res);
-      })
-      .then(() => {
+      .then((cards) => {
+
         return cards.filter((card) => {
-          const values = Object.values(card);
+          const values = [
+            card.country,
+            card.description,
+            card.director,
+            card.nameEN,
+            card.nameRU,
+            card.year,
+          ];
           return values.some((value) => {
-            return value.toString().toLowerCase().includes(query.toLowerCase());
-          })
-        })
+            return value.toLowerCase().includes(query.toLowerCase());
+          });
+        });
       })
       .then((results) => {
-        if (results.length > 0) {
-          setSearchResults(results);
-        } else {
-          setSearchResults([]);
-          setSearchError('Ничего не найдено')
+        setSearchResults(results);
+        if (results.length === 0) {
+          setSearchError("Ничего не найдено");
         }
-      })
-      .then(() => {
-        setIsLoading(false);
       })
       .catch((err) => {
         if (typeof err === "string") {
-        setSearchError(err);
-      } else console.log(err)
+          setSearchError(err);
+        } else console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -189,6 +192,7 @@ setIsLoading(value);
                   searchResults={searchResults}
                   isLoading={isLoading}
                   switchPreloader={switchPreloader}
+
                 />
                 <Footer />
               </>

@@ -1,12 +1,7 @@
 import "./FilterCheckbox.css";
 import React from "react";
 
-function FilterCheckbox() {
-  const [checkboxOn, setCheckboxOn] = React.useState(false);
-
-  function handleCheckboxClick() {
-    setCheckboxOn(!checkboxOn);
-  }
+function FilterCheckbox( {handleCheckboxClick}) {
 
   return (
     <label className="filter-checkbox" htmlFor="shortie">

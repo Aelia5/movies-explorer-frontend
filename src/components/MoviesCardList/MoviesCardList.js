@@ -2,43 +2,77 @@ import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import React from "react";
 
-function MoviesCardList({ cards, isSaved }) {
-  const [width, serWidth] = React.useState(window.innerWidth);
-  console.log(cards);
+function MoviesCardList({ searchResults, isSaved, checkboxOn }) {
+  const [width, setWidth] = React.useState(window.innerWidth);
 
   React.useEffect(() => {
-    const handleResizeWindow = () => serWidth(window.innerWidth);
+    function handleResizeWindow() {
+      setTimeout(setWidth, 1000, window.innerWidth);
+    }
     window.addEventListener("resize", handleResizeWindow);
     return () => {
       window.removeEventListener("resize", handleResizeWindow);
     };
   }, []);
 
+  const [cards, setCards] = React.useState([]);
+
   const [cardsNumber, setCardsNumber] = React.useState(0);
 
+  const [cardsToRender, setCardsToRender] = React.useState([]);
+
+  const [numberToAdd, setNumberToAdd] = React.useState(0);
+
   React.useEffect(() => {
-    if (width > 990) {
+    if (width >= 1280) {
       setCardsNumber(16);
+      setCardsToRender(cards.slice(0, 16));
+      setNumberToAdd(4);
+    } else if (width > 990) {
+      setCardsNumber(12);
+      setCardsToRender(cards.slice(0, 12));
+      setNumberToAdd(3);
     } else if (width > 630) {
       setCardsNumber(8);
+      setCardsToRender(cards.slice(0, 8));
+      setNumberToAdd(2);
     } else {
       setCardsNumber(5);
+      setCardsToRender(cards.slice(0, 5));
+      setNumberToAdd(2);
     }
-  }, [isSaved, width]);
+  }, [cards, width]);
 
-  const cardsToRender = cards.slice(0, cardsNumber);
+  React.useEffect(() => {
+    if (checkboxOn) {
+      setCards(
+        searchResults.filter((movie) => {
+          return movie.duration <= 40;
+        })
+      );
+    } else {
+      setCards(searchResults);
+    }
+  }, [searchResults, checkboxOn]);
+
+  function addCards() {
+    const newCards = cards.slice(cardsNumber, cardsNumber + numberToAdd);
+    setCardsNumber(cardsNumber + numberToAdd);
+    setCardsToRender([...cardsToRender, ...newCards]);
+  }
 
   return (
     <section aria-label="Список фильмов">
       <ul className="movies-cardlist">
         {cardsToRender.map((card) => (
-          <MoviesCard
-            key={card._id}
-            movie={card}
-            isSaved={isSaved}
-          />
+          <MoviesCard key={card.id} movie={card} isSaved={isSaved} />
         ))}
       </ul>
+      {cards.length > 0 && cards.length > cardsToRender.length && (
+        <button className="movies-cardlist__button-more" onClick={addCards}>
+          Ещё
+        </button>
+      )}
     </section>
   );
 }

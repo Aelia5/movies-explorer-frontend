@@ -29,7 +29,7 @@ function MoviesCard({ movie, isSaved }) {
         ></button>
       )}
 
-      <p className="movies-card__length">1ч42м</p>
+      <p className="movies-card__length">{`${Math.floor(movie.duration / 60)}ч${movie.duration % 60}м`}</p>
     </li>
   );
 }

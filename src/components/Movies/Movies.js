@@ -11,7 +11,14 @@ function Movies({
   searchResults,
   isLoading,
   switchPreloader,
+
 }) {
+
+  const [checkboxOn, setCheckboxOn] = React.useState(false);
+
+  function handleCheckboxClick() {
+    setCheckboxOn(!checkboxOn);
+  }
   return (
     <main className="movies">
       <SearchForm
@@ -19,12 +26,12 @@ function Movies({
         changeApiError={changeApiError}
         handleSearchSubmit={handleSearchSubmit}
         switchPreloader={switchPreloader}
+        checkboxOn={checkboxOn}
+        handleCheckboxClick={handleCheckboxClick}
       />
       {isLoading && <Preloader />}
-      <MoviesCardList cards={searchResults} isSaved={false} />
-      {searchResults.length > 0 && (
-        <button className="movies__button-more">Ещё</button>
-      )}
+      <MoviesCardList searchResults={searchResults} isSaved={false} checkboxOn={checkboxOn}/>
+
     </main>
   );
 }

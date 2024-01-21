@@ -2,20 +2,27 @@ import "./SearchForm.css";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import React from "react";
 
-function SearchForm({ handleSearchSubmit, apiError, changeApiError, switchPreloader }) {
+function SearchForm({
+  handleSearchSubmit,
+  apiError,
+  changeApiError,
+  switchPreloader,
+  checkboxOn,
+  handleCheckboxClick,
+}) {
   const [query, setQuery] = React.useState("");
 
   function handleSearchMovie(e) {
     setQuery(e.target.value);
   }
 
-  function handleSubmit (e) {
+  function handleSubmit(e) {
     e.preventDefault();
     if (!query) {
-      changeApiError('Нужно ввести ключевое слово');
+      changeApiError("Нужно ввести ключевое слово");
     } else {
       switchPreloader(true);
-      handleSearchSubmit(query);
+      handleSearchSubmit(query, checkboxOn);
     }
   }
 
@@ -40,8 +47,11 @@ function SearchForm({ handleSearchSubmit, apiError, changeApiError, switchPreloa
           />
           <button className="search-form__submit-button" type="submit" />
         </div>
-        <p className='api-error'>{apiError}</p>
-        <FilterCheckbox />
+        <p className="api-error">{apiError}</p>
+        <FilterCheckbox
+          checkboxOn={checkboxOn}
+          handleCheckboxClick={handleCheckboxClick}
+        />
       </form>
     </section>
   );
