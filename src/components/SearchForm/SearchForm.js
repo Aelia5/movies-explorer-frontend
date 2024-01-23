@@ -10,7 +10,11 @@ function SearchForm({
   checkboxOn,
   handleCheckboxClick,
 }) {
-  const [query, setQuery] = React.useState("");
+  const [query, setQuery] = React.useState(localStorage.getItem("query") || "");
+
+  React.useEffect(() => {
+    localStorage.setItem("query", query);
+  }, [query]);
 
   function handleSearchMovie(e) {
     setQuery(e.target.value);

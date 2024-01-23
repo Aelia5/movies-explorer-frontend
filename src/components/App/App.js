@@ -23,10 +23,20 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
 
   const [loggedIn, setLoggedIn] = React.useState(
-    localStorage.getItem("loggedIn") || false
+    JSON.parse(localStorage.getItem("loggedIn")) || false
   );
 
-  const [searchResults, setSearchResults] = React.useState([]);
+  const [checkboxOn, setCheckboxOn] = React.useState(
+    JSON.parse(localStorage.getItem("checkboxOn")) || false
+  );
+
+  function handleCheckboxClick() {
+    setCheckboxOn(!checkboxOn);
+  }
+
+  const [searchResults, setSearchResults] = React.useState(
+    JSON.parse(localStorage.getItem("searchResults")) || []
+  );
 
   const [isLoading, setIsLoading] = React.useState(false);
   function switchPreloader(value) {
@@ -98,7 +108,7 @@ function App() {
         changeProfileError(err);
       });
   }
-  function handleSearchSubmit(query, checkboxOn) {
+  function handleSearchSubmit(query) {
     getMovies()
       .then((cards) => {
         return cards.filter((card) => {
@@ -132,9 +142,16 @@ function App() {
   }
 
   function signOut() {
-    localStorage.removeItem("token");
+    const keysToRemove = ["token", "query", "checkboxOn", "searchResults"];
+    keysToRemove.forEach((key) => {
+      localStorage.removeItem(key);
+    });
+
     setCurrentUser({});
     setLoggedIn(false);
+    setCheckboxOn(false);
+    setSearchResults([]);
+
     navigate("/", { replace: true });
   }
 
@@ -144,13 +161,16 @@ function App() {
   }
 
   React.useEffect(() => {
-    setLoggedIn(JSON.parse(localStorage.getItem('loggedIn')))
-  }, [])
+    localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
+  }, [loggedIn]);
 
   React.useEffect(() => {
-    localStorage.setItem("loggedIn", loggedIn)
-  }, [loggedIn]
-  )
+    localStorage.setItem("checkboxOn", JSON.stringify(checkboxOn));
+  }, [checkboxOn]);
+
+  React.useEffect(() => {
+    localStorage.setItem("searchResults", JSON.stringify(searchResults));
+  }, [searchResults]);
 
   React.useEffect(() => {
     const token = localStorage.getItem("token");
@@ -200,6 +220,8 @@ function App() {
                   searchResults={searchResults}
                   isLoading={isLoading}
                   switchPreloader={switchPreloader}
+                  handleCheckboxClick={handleCheckboxClick}
+                  checkboxOn={checkboxOn}
                 />
                 <Footer />
               </>

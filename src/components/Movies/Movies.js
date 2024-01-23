@@ -11,14 +11,11 @@ function Movies({
   searchResults,
   isLoading,
   switchPreloader,
-
+  checkboxOn,
+  handleCheckboxClick
 }) {
 
-  const [checkboxOn, setCheckboxOn] = React.useState(false);
 
-  function handleCheckboxClick() {
-    setCheckboxOn(!checkboxOn);
-  }
   return (
     <main className="movies">
       <SearchForm
