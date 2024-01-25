@@ -1,22 +1,49 @@
 import "./MoviesCard.css";
 import React from "react";
 
-function MoviesCard({ movie, isSaved }) {
-  const [isLiked, setIsLiked] = React.useState(false);
+function MoviesCard({ movie, isListSaved, savedMovies, addMovie }) {
+  const [isLiked, setIsLiked] = React.useState(true);
 
-  function toggleLike() {
-    setIsLiked(!isLiked);
+  React.useEffect(() => {
+    if (!isListSaved) {
+      const savedMoviesIds = savedMovies.map((movie) => {
+        return movie.movieId;
+      });
+      const isSaved = savedMoviesIds.some((movieId) => {
+        return movieId === movie.id;
+      });
+      setIsLiked(isSaved);
+    }
+  }, [savedMovies, movie.id, isListSaved]);
+
+  function handleLikeClick() {
+    if (!isLiked) {
+      addMovie(movie);
+    }
   }
+
+  console.log(movie);
 
   return (
     <li className="movies-card">
-      <img
-        className="movies-card__image"
-        alt={movie.nameRU}
-        src={`https://api.nomoreparties.co${movie.image.url}`}
-      ></img>
+      <a
+        href={movie.trailerLink}
+        target="_blank"
+        rel="noreferrer"
+        className="movies-card__link"
+      >
+        <img
+          alt={movie.nameRU}
+          src={
+            isListSaved
+              ? movie.image
+              : `https://api.nomoreparties.co${movie.image.url}`
+          }
+          className="movies-card__image"
+        ></img>
+      </a>
       <h2 className="movies-card__title">{movie.nameRU}</h2>
-      {isSaved ? (
+      {isListSaved ? (
         <button className="movies-card__button  movies-card__button_type_delete" />
       ) : (
         <button
@@ -25,11 +52,13 @@ function MoviesCard({ movie, isSaved }) {
               ? "movies-card__button_type_liked"
               : "movies-card__button_type_unliked"
           }`}
-          onClick={toggleLike}
+          onClick={handleLikeClick}
         ></button>
       )}
 
-      <p className="movies-card__length">{`${Math.floor(movie.duration / 60)}ч${movie.duration % 60}м`}</p>
+      <p className="movies-card__length">{`${Math.floor(movie.duration / 60)}ч${
+        movie.duration % 60
+      }м`}</p>
     </li>
   );
 }

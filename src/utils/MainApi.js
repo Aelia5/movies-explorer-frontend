@@ -63,9 +63,11 @@ function MainApi() {
 
   function editProfileData(newData) {
     return fetch(`${BASE_URL}/users/me`, {
-      method: 'PATCH',
-      headers: {authorization: `Bearer ${localStorage.getItem('token')}`,
-      'Content-type': 'application/json',},
+      method: "PATCH",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-type": "application/json",
+      },
       body: JSON.stringify({
         name: newData.name,
         email: newData.email,
@@ -74,20 +76,68 @@ function MainApi() {
       if (res.status === 200) {
         return res.json();
       } else if (res.status === 409) {
-        return Promise.reject(
-          "Пользователь с таким email уже существует."
-        );
+        return Promise.reject("Пользователь с таким email уже существует.");
       } else {
-        return Promise.reject(
-          "При обновлении профиля произошла ошибка."
-        );
+        return Promise.reject("При обновлении профиля произошла ошибка.");
       }
     });
   }
 
-  return { register, login, getUser, editProfileData };
+  function getSavedMovies() {
+    return fetch(`${BASE_URL}/movies`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-type": "application/json",
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return Promise.reject();
+      }
+    });
+  }
+
+  function saveMovie(movie) {
+    console.log(movie.image.url);
+    return fetch(`${BASE_URL}/movies`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        movieId: movie.id,
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: `https://api.nomoreparties.co${movie.image.url}`,
+        trailerLink: movie.trailerLink,
+        thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
+        owner: movie.owner,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+      }),
+    }).then((res) => {
+      if (res.status === 201) {
+        return res.json();
+      } else {
+        return Promise.reject();
+      }
+    });
+  }
+
+  return {
+    register,
+    login,
+    getUser,
+    editProfileData,
+    getSavedMovies,
+    saveMovie,
+  };
 }
-
-
 
 export default MainApi;

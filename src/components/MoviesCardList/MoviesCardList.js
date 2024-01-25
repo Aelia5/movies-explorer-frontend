@@ -2,7 +2,13 @@ import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import React from "react";
 
-function MoviesCardList({ searchResults, isSaved, checkboxOn }) {
+function MoviesCardList({
+  searchResults,
+  isSaved,
+  checkboxOn,
+  savedMovies,
+  addMovie,
+}) {
   const [width, setWidth] = React.useState(window.innerWidth);
 
   React.useEffect(() => {
@@ -24,36 +30,46 @@ function MoviesCardList({ searchResults, isSaved, checkboxOn }) {
   const [numberToAdd, setNumberToAdd] = React.useState(0);
 
   React.useEffect(() => {
-    if (width >= 1280) {
-      setCardsNumber(16);
-      setCardsToRender(cards.slice(0, 16));
-      setNumberToAdd(4);
-    } else if (width > 990) {
-      setCardsNumber(12);
-      setCardsToRender(cards.slice(0, 12));
-      setNumberToAdd(3);
-    } else if (width > 630) {
-      setCardsNumber(8);
-      setCardsToRender(cards.slice(0, 8));
-      setNumberToAdd(2);
+    if (isSaved) {
+      setCardsToRender(cards);
     } else {
-      setCardsNumber(5);
-      setCardsToRender(cards.slice(0, 5));
-      setNumberToAdd(2);
+      if (width >= 1280) {
+        setCardsNumber(16);
+        setCardsToRender(cards.slice(0, 16));
+        setNumberToAdd(4);
+      } else if (width > 990) {
+        setCardsNumber(12);
+        setCardsToRender(cards.slice(0, 12));
+        setNumberToAdd(3);
+      } else if (width > 630) {
+        setCardsNumber(8);
+        setCardsToRender(cards.slice(0, 8));
+        setNumberToAdd(2);
+      } else {
+        setCardsNumber(5);
+        setCardsToRender(cards.slice(0, 5));
+        setNumberToAdd(2);
+      }
     }
-  }, [cards, width]);
+  }, [cards, width, isSaved]);
 
   React.useEffect(() => {
+    let fullArray;
+    if (isSaved) {
+      fullArray = savedMovies;
+    } else {
+      fullArray = searchResults;
+    }
     if (checkboxOn) {
       setCards(
-        searchResults.filter((movie) => {
+        fullArray.filter((movie) => {
           return movie.duration <= 40;
         })
       );
     } else {
-      setCards(searchResults);
+      setCards(fullArray);
     }
-  }, [searchResults, checkboxOn]);
+  }, [searchResults, savedMovies, checkboxOn, isSaved]);
 
   function addCards() {
     const newCards = cards.slice(cardsNumber, cardsNumber + numberToAdd);
@@ -65,7 +81,13 @@ function MoviesCardList({ searchResults, isSaved, checkboxOn }) {
     <section aria-label="Список фильмов">
       <ul className="movies-cardlist">
         {cardsToRender.map((card) => (
-          <MoviesCard key={card.id} movie={card} isSaved={isSaved} />
+          <MoviesCard
+            key={card.id}
+            movie={card}
+            isListSaved={isSaved}
+            addMovie={addMovie}
+            savedMovies={savedMovies}
+          />
         ))}
       </ul>
       {cards.length > 0 && cards.length > cardsToRender.length && (

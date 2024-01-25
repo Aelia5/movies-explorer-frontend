@@ -12,10 +12,10 @@ function Movies({
   isLoading,
   switchPreloader,
   checkboxOn,
-  handleCheckboxClick
+  handleCheckboxClick,
+  addMovie,
+  savedMovies,
 }) {
-
-
   return (
     <main className="movies">
       <SearchForm
@@ -27,8 +27,13 @@ function Movies({
         handleCheckboxClick={handleCheckboxClick}
       />
       {isLoading && <Preloader />}
-      <MoviesCardList searchResults={searchResults} isSaved={false} checkboxOn={checkboxOn}/>
-
+      <MoviesCardList
+        searchResults={searchResults}
+        isSaved={false}
+        checkboxOn={checkboxOn}
+        addMovie={addMovie}
+        savedMovies={savedMovies}
+      />
     </main>
   );
 }

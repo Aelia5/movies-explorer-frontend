@@ -17,8 +17,17 @@ import MoviesApi from "../../utils/MoviesApi";
 function App() {
   const navigate = useNavigate();
 
-  const { register, login, getUser, editProfileData } = MainApi();
+  const {
+    register,
+    login,
+    getUser,
+    editProfileData,
+    getSavedMovies,
+    saveMovie,
+  } = MainApi();
   const { getMovies } = MoviesApi();
+
+  //Стейты
 
   const [currentUser, setCurrentUser] = React.useState({});
 
@@ -37,6 +46,8 @@ function App() {
   const [searchResults, setSearchResults] = React.useState(
     JSON.parse(localStorage.getItem("searchResults")) || []
   );
+
+  const [savedMovies, setSavedMovies] = React.useState([]);
 
   const [isLoading, setIsLoading] = React.useState(false);
   function switchPreloader(value) {
@@ -63,9 +74,16 @@ function App() {
     setSearchError(errorMessage);
   }
 
+  const [savedError, setSavedError] = React.useState("");
+  function changeSavedError(errorMessage) {
+    setSavedError(errorMessage);
+  }
+
+  // Функции управления профилем
+
   function handleRegistrationSubmit(data, resetForm) {
     register(data)
-      .then((res) => {
+      .then(() => {
         resetForm();
 
         setLoggedIn(true);
@@ -108,18 +126,33 @@ function App() {
         changeProfileError(err);
       });
   }
+
+  function signOut() {
+    const keysToRemove = ["token", "query", "checkboxOn", "searchResults"];
+    keysToRemove.forEach((key) => {
+      localStorage.removeItem(key);
+    });
+
+    setCurrentUser({});
+    setLoggedIn(false);
+    setCheckboxOn(false);
+    setSearchResults([]);
+
+    navigate("/", { replace: true });
+  }
+
+  function authorize(userData) {
+    setCurrentUser(userData);
+    setLoggedIn(true);
+  }
+
+  //Функции управления карточками
+
   function handleSearchSubmit(query) {
     getMovies()
       .then((cards) => {
         return cards.filter((card) => {
-          const values = [
-            card.country,
-            card.description,
-            card.director,
-            card.nameEN,
-            card.nameRU,
-            card.year,
-          ];
+          const values = [card.nameEN, card.nameRU];
           return values.some((value) => {
             return value.toLowerCase().includes(query.toLowerCase());
           });
@@ -141,24 +174,25 @@ function App() {
       });
   }
 
-  function signOut() {
-    const keysToRemove = ["token", "query", "checkboxOn", "searchResults"];
-    keysToRemove.forEach((key) => {
-      localStorage.removeItem(key);
+  function addMovie(movie) {
+    saveMovie(movie).then((movie) => {
+      setSavedMovies([movie, ...savedMovies]);
     });
-
-    setCurrentUser({});
-    setLoggedIn(false);
-    setCheckboxOn(false);
-    setSearchResults([]);
-
-    navigate("/", { replace: true });
   }
 
-  function authorize(userData) {
-    setCurrentUser(userData);
-    setLoggedIn(true);
-  }
+  // Эффекты
+
+  React.useEffect(() => {
+    getSavedMovies()
+      .then((res) => {
+        setSavedMovies(res);
+      })
+      .catch(() => {
+        changeSavedError(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+        );
+      });
+  }, []);
 
   React.useEffect(() => {
     localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
@@ -222,6 +256,8 @@ function App() {
                   switchPreloader={switchPreloader}
                   handleCheckboxClick={handleCheckboxClick}
                   checkboxOn={checkboxOn}
+                  addMovie={addMovie}
+                  savedMovies={savedMovies}
                 />
                 <Footer />
               </>
@@ -236,7 +272,13 @@ function App() {
                   loggedIn={loggedIn}
                   className=""
                 />
-                <ProtectedRoute element={SavedMovies} loggedIn={loggedIn} />
+                <ProtectedRoute
+                  element={SavedMovies}
+                  loggedIn={loggedIn}
+                  savedMovies={savedMovies}
+                  apiError={savedError}
+                  changeApiError={changeSavedError}
+                />
                 <Footer />
               </>
             }

@@ -2,11 +2,11 @@ import "./SavedMovies.css";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-function SavedMovies() {
+function SavedMovies({ savedMovies, apiError, changeApiError }) {
   return (
     <main className="saved-movies">
-      <SearchForm />
-      <MoviesCardList isSaved={true} />
+      <SearchForm apiError={apiError} changeApiError={changeApiError} />
+      <MoviesCardList isSaved={true} savedMovies={savedMovies} />
     </main>
   );
 }
