@@ -8,6 +8,7 @@ function MoviesCardList({
   checkboxOn,
   savedMovies,
   addMovie,
+  removeMovie,
 }) {
   const [width, setWidth] = React.useState(window.innerWidth);
 
@@ -82,10 +83,11 @@ function MoviesCardList({
       <ul className="movies-cardlist">
         {cardsToRender.map((card) => (
           <MoviesCard
-            key={card.id}
+            key={isSaved ? card._id : card.id}
             movie={card}
             isListSaved={isSaved}
             addMovie={addMovie}
+            removeMovie={removeMovie}
             savedMovies={savedMovies}
           />
         ))}

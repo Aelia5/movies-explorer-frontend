@@ -9,6 +9,7 @@ function SearchForm({
   switchPreloader,
   checkboxOn,
   handleCheckboxClick,
+  savedMovies,
 }) {
   const [query, setQuery] = React.useState(localStorage.getItem("query") || "");
 
@@ -34,7 +35,7 @@ function SearchForm({
     if (apiError) {
       changeApiError("");
     }
-  }, [query]);
+  }, [query, savedMovies]);
 
   return (
     <section aria-label="Форма поиска фильмов">

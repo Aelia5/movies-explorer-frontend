@@ -24,6 +24,7 @@ function App() {
     editProfileData,
     getSavedMovies,
     saveMovie,
+    deleteMovie,
   } = MainApi();
   const { getMovies } = MoviesApi();
 
@@ -175,24 +176,48 @@ function App() {
   }
 
   function addMovie(movie) {
-    saveMovie(movie).then((movie) => {
-      setSavedMovies([movie, ...savedMovies]);
-    });
+    saveMovie(movie)
+      .then((movie) => {
+        setSavedMovies([movie, ...savedMovies]);
+      })
+      .catch((err) => {
+        changeSearchError(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+        );
+      });
+  }
+
+  function removeMovie(movie) {
+    deleteMovie(movie)
+      .then((movie) => {
+        const updatedMovies = savedMovies.filter((item) => {
+          return item._id !== movie._id;
+        });
+        setSavedMovies(updatedMovies);
+      })
+      .catch(() => {
+        changeSearchError(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+        );
+      });
   }
 
   // Эффекты
 
   React.useEffect(() => {
     getSavedMovies()
-      .then((res) => {
-        setSavedMovies(res);
+      .then((movies) => {
+        const usersMovies = movies.filter((movie) => {
+          return movie.owner._id === currentUser._id;
+        });
+        setSavedMovies(usersMovies);
       })
       .catch(() => {
         changeSavedError(
           "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
         );
       });
-  }, []);
+  }, [currentUser]);
 
   React.useEffect(() => {
     localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
@@ -257,6 +282,7 @@ function App() {
                   handleCheckboxClick={handleCheckboxClick}
                   checkboxOn={checkboxOn}
                   addMovie={addMovie}
+                  removeMovie={removeMovie}
                   savedMovies={savedMovies}
                 />
                 <Footer />
@@ -278,6 +304,7 @@ function App() {
                   savedMovies={savedMovies}
                   apiError={savedError}
                   changeApiError={changeSavedError}
+                  removeMovie={removeMovie}
                 />
                 <Footer />
               </>

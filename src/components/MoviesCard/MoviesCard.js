@@ -1,7 +1,13 @@
 import "./MoviesCard.css";
 import React from "react";
 
-function MoviesCard({ movie, isListSaved, savedMovies, addMovie }) {
+function MoviesCard({
+  movie,
+  isListSaved,
+  savedMovies,
+  addMovie,
+  removeMovie,
+}) {
   const [isLiked, setIsLiked] = React.useState(true);
 
   React.useEffect(() => {
@@ -16,13 +22,26 @@ function MoviesCard({ movie, isListSaved, savedMovies, addMovie }) {
     }
   }, [savedMovies, movie.id, isListSaved]);
 
-  function handleLikeClick() {
-    if (!isLiked) {
-      addMovie(movie);
-    }
+  function findMovieId(movieId) {
+    const searchedMovie = savedMovies.find((movie) => {
+      return movie.movieId === movieId;
+    });
+    return searchedMovie._id;
   }
 
-  console.log(movie);
+  function handleLikeClick() {
+    if (isListSaved) {
+      console.log(movie._id);
+      removeMovie(movie._id);
+    } else {
+      if (!isLiked) {
+        addMovie(movie);
+      } else {
+        const idToRemove = findMovieId(movie.id);
+        removeMovie(idToRemove);
+      }
+    }
+  }
 
   return (
     <li className="movies-card">
@@ -44,7 +63,10 @@ function MoviesCard({ movie, isListSaved, savedMovies, addMovie }) {
       </a>
       <h2 className="movies-card__title">{movie.nameRU}</h2>
       {isListSaved ? (
-        <button className="movies-card__button  movies-card__button_type_delete" />
+        <button
+          className="movies-card__button  movies-card__button_type_delete"
+          onClick={handleLikeClick}
+        />
       ) : (
         <button
           className={`movies-card__button ${

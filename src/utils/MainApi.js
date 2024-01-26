@@ -100,7 +100,6 @@ function MainApi() {
   }
 
   function saveMovie(movie) {
-    console.log(movie.image.url);
     return fetch(`${BASE_URL}/movies`, {
       method: "POST",
       headers: {
@@ -130,6 +129,22 @@ function MainApi() {
     });
   }
 
+  function deleteMovie(movieId) {
+    return fetch(`${BASE_URL}/movies/${movieId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-type": "application/json",
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return Promise.reject();
+      }
+    });
+  }
+
   return {
     register,
     login,
@@ -137,6 +152,7 @@ function MainApi() {
     editProfileData,
     getSavedMovies,
     saveMovie,
+    deleteMovie,
   };
 }
 
