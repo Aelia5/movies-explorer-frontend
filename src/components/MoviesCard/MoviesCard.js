@@ -31,7 +31,6 @@ function MoviesCard({
 
   function handleLikeClick() {
     if (isListSaved) {
-      console.log(movie._id);
       removeMovie(movie._id);
     } else {
       if (!isLiked) {

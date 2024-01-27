@@ -13,6 +13,7 @@ import Register from "../Register/Register";
 import Login from "../Login/Login";
 import MainApi from "../../utils/MainApi";
 import MoviesApi from "../../utils/MoviesApi";
+import Filter from "../../utils/Filter";
 
 function App() {
   const navigate = useNavigate();
@@ -28,6 +29,8 @@ function App() {
   } = MainApi();
   const { getMovies } = MoviesApi();
 
+  const { filterByQuery } = Filter();
+
   //Стейты
 
   const [currentUser, setCurrentUser] = React.useState({});
@@ -39,7 +42,6 @@ function App() {
   const [checkboxOn, setCheckboxOn] = React.useState(
     JSON.parse(localStorage.getItem("checkboxOn")) || false
   );
-
   function handleCheckboxClick() {
     setCheckboxOn(!checkboxOn);
   }
@@ -152,12 +154,7 @@ function App() {
   function handleSearchSubmit(query) {
     getMovies()
       .then((cards) => {
-        return cards.filter((card) => {
-          const values = [card.nameEN, card.nameRU];
-          return values.some((value) => {
-            return value.toLowerCase().includes(query.toLowerCase());
-          });
-        });
+        return filterByQuery(query, cards);
       })
       .then((results) => {
         setSearchResults(results);
@@ -305,6 +302,10 @@ function App() {
                   apiError={savedError}
                   changeApiError={changeSavedError}
                   removeMovie={removeMovie}
+                  // handleSearchSubmit={handleSearchSavedSubmit}
+                  // searchResults={searchInSaved}
+                  // handleCheckboxClick={handleSavedCheckboxClick}
+                  // checkboxOn={savedCheckboxOn}
                 />
                 <Footer />
               </>

@@ -3,6 +3,7 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import React from "react";
 
 function SearchForm({
+  isSaved,
   handleSearchSubmit,
   apiError,
   changeApiError,
@@ -13,21 +14,29 @@ function SearchForm({
 }) {
   const [query, setQuery] = React.useState(localStorage.getItem("query") || "");
 
+  const [savedQuery, setSavedQuery] = React.useState("");
+
   React.useEffect(() => {
     localStorage.setItem("query", query);
   }, [query]);
 
   function handleSearchMovie(e) {
-    setQuery(e.target.value);
+    if (!isSaved) {
+      setQuery(e.target.value);
+    } else {
+      setSavedQuery(e.target.value);
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!query) {
       changeApiError("Нужно ввести ключевое слово");
-    } else {
+    } else if (!isSaved) {
       switchPreloader(true);
       handleSearchSubmit(query, checkboxOn);
+    } else {
+      handleSearchSubmit(savedQuery, checkboxOn);
     }
   }
 
@@ -35,7 +44,7 @@ function SearchForm({
     if (apiError) {
       changeApiError("");
     }
-  }, [query, savedMovies]);
+  }, [query, savedQuery, savedMovies]);
 
   return (
     <section aria-label="Форма поиска фильмов">
@@ -48,7 +57,7 @@ function SearchForm({
             id="movie"
             onChange={handleSearchMovie}
             placeholder="Фильм"
-            value={query || ""}
+            value={isSaved ? savedQuery || "" : query || ""}
           />
           <button className="search-form__submit-button" type="submit" />
         </div>

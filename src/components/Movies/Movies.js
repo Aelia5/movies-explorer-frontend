@@ -27,6 +27,7 @@ function Movies({
         checkboxOn={checkboxOn}
         handleCheckboxClick={handleCheckboxClick}
         savedMovies={savedMovies}
+        isSaved={false}
       />
       {isLoading && <Preloader />}
       <MoviesCardList

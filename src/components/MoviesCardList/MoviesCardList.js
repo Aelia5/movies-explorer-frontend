@@ -9,6 +9,7 @@ function MoviesCardList({
   savedMovies,
   addMovie,
   removeMovie,
+  apiError,
 }) {
   const [width, setWidth] = React.useState(window.innerWidth);
 
@@ -56,7 +57,7 @@ function MoviesCardList({
 
   React.useEffect(() => {
     let fullArray;
-    if (isSaved) {
+    if (isSaved && searchResults.length === 0 && !apiError) {
       fullArray = savedMovies;
     } else {
       fullArray = searchResults;
@@ -70,7 +71,7 @@ function MoviesCardList({
     } else {
       setCards(fullArray);
     }
-  }, [searchResults, savedMovies, checkboxOn, isSaved]);
+  }, [searchResults, isSaved, savedMovies, checkboxOn, apiError]);
 
   function addCards() {
     const newCards = cards.slice(cardsNumber, cardsNumber + numberToAdd);
