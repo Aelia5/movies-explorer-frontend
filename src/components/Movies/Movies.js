@@ -10,7 +10,6 @@ function Movies({
   changeApiError,
   searchResults,
   isLoading,
-  switchPreloader,
   checkboxOn,
   handleCheckboxClick,
   addMovie,
@@ -23,7 +22,6 @@ function Movies({
         apiError={apiError}
         changeApiError={changeApiError}
         handleSearchSubmit={handleSearchSubmit}
-        switchPreloader={switchPreloader}
         checkboxOn={checkboxOn}
         handleCheckboxClick={handleCheckboxClick}
         savedMovies={savedMovies}

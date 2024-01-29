@@ -1,10 +1,17 @@
 import "./Profile.css";
 import React from "react";
 import { useFormWithValidation } from "../Validation/Validation";
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function Profile({  onExit, apiError, changeApiError, handleEditProfileSubmit }) {
+function Profile({
+  onExit,
+  apiError,
+  changeApiError,
+  handleEditProfileSubmit,
+}) {
   const currentUser = React.useContext(CurrentUserContext);
+
+  const [isNew, setIsNew] = React.useState(false);
 
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
@@ -18,10 +25,17 @@ function Profile({  onExit, apiError, changeApiError, handleEditProfileSubmit })
     e.preventDefault();
     if (isValid) {
       handleEditProfileSubmit(values, resetForm, setIsEdited);
-
     }
   }
 
+  React.useEffect(() => {
+    if (
+      values.name !== currentUser.name ||
+      values.email !== currentUser.email
+    ) {
+      setIsNew(true);
+    } else setIsNew(false);
+  }, [values, currentUser]);
 
   React.useEffect(() => {
     resetForm(currentUser, {}, false);
@@ -36,7 +50,9 @@ function Profile({  onExit, apiError, changeApiError, handleEditProfileSubmit })
   return (
     <main>
       <section className="profile">
-        <h1 className="form-title profile__title">Привет, {currentUser.name}!</h1>
+        <h1 className="form-title profile__title">
+          Привет, {currentUser.name}!
+        </h1>
         {isEdited ? (
           <form className="profile__form" onSubmit={handleSubmit} noValidate>
             <label className="profile__label" htmlFor="name">
@@ -72,7 +88,10 @@ function Profile({  onExit, apiError, changeApiError, handleEditProfileSubmit })
             </label>
             <p className="form__input-error">{errors.email}</p>
             <p className="api-error profile__api-error">{apiError}</p>
-            <button className="submit-button" disabled={!isValid || apiError}>
+            <button
+              className="submit-button"
+              disabled={!isValid || !isNew || apiError}
+            >
               Сохранить
             </button>
           </form>

@@ -7,7 +7,6 @@ function SearchForm({
   handleSearchSubmit,
   apiError,
   changeApiError,
-  switchPreloader,
   checkboxOn,
   handleCheckboxClick,
   savedMovies,
@@ -30,13 +29,11 @@ function SearchForm({
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!query) {
+
+    if ((!isSaved && !query) || (isSaved && !savedQuery)) {
       changeApiError("Нужно ввести ключевое слово");
-    } else if (!isSaved) {
-      switchPreloader(true);
-      handleSearchSubmit(query, checkboxOn);
     } else {
-      handleSearchSubmit(savedQuery, checkboxOn);
+      handleSearchSubmit(isSaved ? savedQuery : query);
     }
   }
 

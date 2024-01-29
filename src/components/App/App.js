@@ -46,6 +46,8 @@ function App() {
     setCheckboxOn(!checkboxOn);
   }
 
+  const [allMovies, setAllMovies] = React.useState([]);
+
   const [searchResults, setSearchResults] = React.useState(
     JSON.parse(localStorage.getItem("searchResults")) || []
   );
@@ -84,13 +86,29 @@ function App() {
 
   // Функции управления профилем
 
-  function handleRegistrationSubmit(data, resetForm) {
-    register(data)
-      .then(() => {
+  function authorize(token, resetForm) {
+    localStorage.setItem("token", token);
+    getUser(token)
+      .then((res) => {
+        return res;
+      })
+      .then((userData) => {
         resetForm();
-
+        setCurrentUser(userData);
         setLoggedIn(true);
         navigate("/movies", { replace: true });
+      });
+  }
+
+  function handleRegistrationSubmit(data, resetForm) {
+    const password = data.password;
+    register(data)
+      .then((userData) => {
+        userData.password = password;
+        return login(userData);
+      })
+      .then((res) => {
+        authorize(res.token, resetForm);
       })
       .catch((err) => {
         setRegisterError(err);
@@ -100,16 +118,7 @@ function App() {
   function handleLoginSubmit(data, resetForm) {
     login(data)
       .then((res) => {
-        localStorage.setItem("token", res.token);
-        getUser(res.token)
-          .then((res) => {
-            return res;
-          })
-          .then((userData) => {
-            resetForm();
-            authorize(userData);
-            navigate("/movies", { replace: true });
-          });
+        authorize(res.token, resetForm);
       })
       .catch((err) => {
         setLoginError(err);
@@ -144,32 +153,35 @@ function App() {
     navigate("/", { replace: true });
   }
 
-  function authorize(userData) {
-    setCurrentUser(userData);
-    setLoggedIn(true);
-  }
-
   //Функции управления карточками
 
+  function handleSearch(query, movies) {
+    const results = filterByQuery(query, movies);
+    setSearchResults(results);
+    if (results.length === 0) {
+      setSearchError("Ничего не найдено");
+    }
+  }
+
+  console.log(allMovies);
+
   function handleSearchSubmit(query) {
-    getMovies()
-      .then((cards) => {
-        return filterByQuery(query, cards);
-      })
-      .then((results) => {
-        setSearchResults(results);
-        if (results.length === 0) {
-          setSearchError("Ничего не найдено");
-        }
-      })
-      .catch((err) => {
-        if (typeof err === "string") {
+    if (allMovies.length === 0) {
+      setIsLoading(true);
+      getMovies()
+        .then((movies) => {
+          setAllMovies(movies);
+          handleSearch(query, movies);
+        })
+        .catch((err) => {
           setSearchError(err);
-        } else console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      handleSearch(query, allMovies);
+    }
   }
 
   function addMovie(movie) {
@@ -236,7 +248,8 @@ function App() {
           return res;
         })
         .then((userData) => {
-          authorize(userData);
+          setCurrentUser(userData);
+          setLoggedIn(true);
         })
         .catch((err) => {
           console.log(err);
@@ -275,7 +288,6 @@ function App() {
                   changeApiError={changeSearchError}
                   searchResults={searchResults}
                   isLoading={isLoading}
-                  switchPreloader={switchPreloader}
                   handleCheckboxClick={handleCheckboxClick}
                   checkboxOn={checkboxOn}
                   addMovie={addMovie}
