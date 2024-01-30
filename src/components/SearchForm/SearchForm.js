@@ -10,6 +10,7 @@ function SearchForm({
   checkboxOn,
   handleCheckboxClick,
   savedMovies,
+  blocked,
 }) {
   const [query, setQuery] = React.useState(localStorage.getItem("query") || "");
 
@@ -55,6 +56,7 @@ function SearchForm({
             onChange={handleSearchMovie}
             placeholder="Фильм"
             value={isSaved ? savedQuery || "" : query || ""}
+            disabled={blocked}
           />
           <button className="search-form__submit-button" type="submit" />
         </div>

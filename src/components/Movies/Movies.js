@@ -15,6 +15,7 @@ function Movies({
   addMovie,
   removeMovie,
   savedMovies,
+  formBlocked,
 }) {
   return (
     <main className="movies">
@@ -26,6 +27,7 @@ function Movies({
         handleCheckboxClick={handleCheckboxClick}
         savedMovies={savedMovies}
         isSaved={false}
+        blocked={formBlocked}
       />
       {isLoading && <Preloader />}
       <MoviesCardList

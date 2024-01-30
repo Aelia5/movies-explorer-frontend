@@ -3,14 +3,11 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormWithValidation } from "../Validation/Validation";
 
-function Login({ handleLoginSubmit, apiError, changeApiError }) {
+function Login({ handleLoginSubmit, apiError, changeApiError, blocked }) {
   const navigate = useNavigate();
 
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
-
-  const [buttonDisabled, setButtonDisabled] = React.useState(false);
-
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -24,8 +21,6 @@ function Login({ handleLoginSubmit, apiError, changeApiError }) {
       changeApiError("");
     }
   }, [values]);
-
-
 
   return (
     <main className="login">
@@ -49,6 +44,7 @@ function Login({ handleLoginSubmit, apiError, changeApiError }) {
             onChange={handleChange}
             value={values.email || ""}
             required
+            disabled={blocked}
           ></input>
           <p className="form__input-error">{errors.email}</p>
           <label htmlFor="password" className="form__label">
@@ -64,12 +60,13 @@ function Login({ handleLoginSubmit, apiError, changeApiError }) {
             onChange={handleChange}
             value={values.password || ""}
             required
+            disabled={blocked}
           ></input>
           <p className="form__input-error">{errors.password}</p>
           <p className="api-error login__api-error">{apiError}</p>
           <button
             className="login__submit-button submit-button"
-            disabled={!isValid || apiError}
+            disabled={!isValid || apiError || blocked}
           >
             Войти
           </button>

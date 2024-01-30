@@ -84,6 +84,8 @@ function App() {
     setSavedError(errorMessage);
   }
 
+  const [formsBlocked, setFormsBlocked] = React.useState(false);
+
   // Функции управления профилем
 
   function authorize(token, resetForm) {
@@ -101,6 +103,7 @@ function App() {
   }
 
   function handleRegistrationSubmit(data, resetForm) {
+    setFormsBlocked(true);
     const password = data.password;
     register(data)
       .then((userData) => {
@@ -112,20 +115,28 @@ function App() {
       })
       .catch((err) => {
         setRegisterError(err);
+      })
+      .finally(() => {
+        setFormsBlocked(false);
       });
   }
 
   function handleLoginSubmit(data, resetForm) {
+    setFormsBlocked(true);
     login(data)
       .then((res) => {
         authorize(res.token, resetForm);
       })
       .catch((err) => {
         setLoginError(err);
+      })
+      .finally(() => {
+        setFormsBlocked(false);
       });
   }
 
   function handleEditProfileSubmit(data, resetForm, redirect) {
+    setFormsBlocked(true);
     editProfileData(data)
       .then((res) => {
         setCurrentUser(res);
@@ -136,6 +147,9 @@ function App() {
       })
       .catch((err) => {
         changeProfileError(err);
+      })
+      .finally(() => {
+        setFormsBlocked(false);
       });
   }
 
@@ -163,11 +177,10 @@ function App() {
     }
   }
 
-  console.log(allMovies);
-
   function handleSearchSubmit(query) {
     if (allMovies.length === 0) {
       setIsLoading(true);
+      setFormsBlocked(true);
       getMovies()
         .then((movies) => {
           setAllMovies(movies);
@@ -178,6 +191,8 @@ function App() {
         })
         .finally(() => {
           setIsLoading(false);
+
+          setFormsBlocked(false);
         });
     } else {
       handleSearch(query, allMovies);
@@ -189,7 +204,7 @@ function App() {
       .then((movie) => {
         setSavedMovies([movie, ...savedMovies]);
       })
-      .catch((err) => {
+      .catch(() => {
         changeSearchError(
           "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
         );
@@ -293,6 +308,7 @@ function App() {
                   addMovie={addMovie}
                   removeMovie={removeMovie}
                   savedMovies={savedMovies}
+                  formBlocked={formsBlocked}
                 />
                 <Footer />
               </>
@@ -314,10 +330,6 @@ function App() {
                   apiError={savedError}
                   changeApiError={changeSavedError}
                   removeMovie={removeMovie}
-                  // handleSearchSubmit={handleSearchSavedSubmit}
-                  // searchResults={searchInSaved}
-                  // handleCheckboxClick={handleSavedCheckboxClick}
-                  // checkboxOn={savedCheckboxOn}
                 />
                 <Footer />
               </>
@@ -340,6 +352,7 @@ function App() {
                   handleEditProfileSubmit={handleEditProfileSubmit}
                   apiError={profileError}
                   changeApiError={changeProfileError}
+                  blocked={formsBlocked}
                 />
                 <Footer />
               </>
@@ -358,6 +371,7 @@ function App() {
                   handleLoginSubmit={handleLoginSubmit}
                   apiError={loginError}
                   changeApiError={changeLoginError}
+                  blocked={formsBlocked}
                 />
               )
             }
@@ -374,6 +388,7 @@ function App() {
                   handleRegistrationSubmit={handleRegistrationSubmit}
                   apiError={registerError}
                   changeApiError={changeRegisterError}
+                  blocked={formsBlocked}
                 />
               )
             }

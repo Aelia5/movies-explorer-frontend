@@ -3,13 +3,18 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormWithValidation } from "../Validation/Validation";
 
-function Register({ handleRegistrationSubmit, apiError, changeApiError }) {
+function Register({
+  handleRegistrationSubmit,
+  apiError,
+  changeApiError,
+  blocked,
+}) {
   const navigate = useNavigate();
 
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
 
-    function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     if (isValid) {
       handleRegistrationSubmit(values, resetForm);
@@ -48,6 +53,7 @@ function Register({ handleRegistrationSubmit, apiError, changeApiError }) {
             title="Только кириллица, латиница, дефисы и пробелы"
             value={values.name || ""}
             required
+            disabled={blocked}
           ></input>
           <p className="form__input-error">{errors.name}</p>
           <label htmlFor="email" className="form__label">
@@ -62,6 +68,7 @@ function Register({ handleRegistrationSubmit, apiError, changeApiError }) {
             onChange={handleChange}
             value={values.email || ""}
             required
+            disabled={blocked}
           ></input>
           <p className="form__input-error">{errors.email}</p>
           <label htmlFor="password" className="form__label">
@@ -77,13 +84,14 @@ function Register({ handleRegistrationSubmit, apiError, changeApiError }) {
             onChange={handleChange}
             value={values.password || ""}
             required
+            disabled={blocked}
           ></input>
           <p className="form__input-error">{errors.password}</p>
           <p className="api-error register__api-error">{apiError}</p>
           <button
             type="submit"
             className="register__submit-button submit-button"
-            disabled={!isValid || apiError}
+            disabled={!isValid || apiError || blocked}
           >
             Зарегистрироваться
           </button>

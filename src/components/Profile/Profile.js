@@ -8,6 +8,7 @@ function Profile({
   apiError,
   changeApiError,
   handleEditProfileSubmit,
+  blocked,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -70,6 +71,7 @@ function Profile({
                 title="Только кириллица, латиница, дефисы и пробелы"
                 onChange={handleChange}
                 required
+                disabled={blocked}
               ></input>
             </label>
             <p className="form__input-error">{errors.name}</p>
@@ -84,13 +86,14 @@ function Profile({
                 value={values.email}
                 required
                 onChange={handleChange}
+                disabled={blocked}
               ></input>
             </label>
             <p className="form__input-error">{errors.email}</p>
             <p className="api-error profile__api-error">{apiError}</p>
             <button
               className="submit-button"
-              disabled={!isValid || !isNew || apiError}
+              disabled={!isValid || !isNew || apiError || blocked}
             >
               Сохранить
             </button>
