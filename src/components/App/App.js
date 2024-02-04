@@ -1,6 +1,12 @@
 import "./App.css";
 import React from "react";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Header from "../Header/Header";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
@@ -17,6 +23,8 @@ import Filter from "../../utils/Filter";
 
 function App() {
   const navigate = useNavigate();
+
+  const location = useLocation();
 
   const {
     register,
@@ -86,6 +94,10 @@ function App() {
 
   const [formsBlocked, setFormsBlocked] = React.useState(false);
 
+  const [editSuccess, setEditSuccess] = React.useState(false);
+
+  const [movieIdToDelete, setMovieIdToDelete] = React.useState("");
+
   // Функции управления профилем
 
   function authorize(token, resetForm) {
@@ -144,15 +156,19 @@ function App() {
       .then(() => {
         resetForm(data, {}, false);
         redirect(false);
+        setEditSuccess(true);
       })
       .catch((err) => {
-        changeProfileError(err);
+        if (err === 401) {
+          signOut();
+        } else {
+          changeProfileError(err);
+        }
       })
       .finally(() => {
         setFormsBlocked(false);
       });
   }
-
   function signOut() {
     const keysToRemove = ["token", "query", "checkboxOn", "searchResults"];
     keysToRemove.forEach((key) => {
@@ -191,7 +207,6 @@ function App() {
         })
         .finally(() => {
           setIsLoading(false);
-
           setFormsBlocked(false);
         });
     } else {
@@ -204,10 +219,14 @@ function App() {
       .then((movie) => {
         setSavedMovies([movie, ...savedMovies]);
       })
-      .catch(() => {
-        changeSearchError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-        );
+      .catch((err) => {
+        if (err === 401) {
+          signOut();
+        } else {
+          changeSearchError(
+            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+          );
+        }
       });
   }
 
@@ -218,29 +237,42 @@ function App() {
           return item._id !== movie._id;
         });
         setSavedMovies(updatedMovies);
+        setMovieIdToDelete(movie._id);
       })
-      .catch(() => {
-        changeSearchError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-        );
+      .catch((err) => {
+        if (err === 401) {
+          signOut();
+        } else {
+          changeSearchError(
+            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+          );
+        }
       });
   }
 
   // Эффекты
 
   React.useEffect(() => {
-    getSavedMovies()
-      .then((movies) => {
-        const usersMovies = movies.filter((movie) => {
-          return movie.owner._id === currentUser._id;
+    if (loggedIn) {
+      getSavedMovies()
+        .then((movies) => {
+          const usersMovies = movies.filter((movie) => {
+            return movie.owner._id === currentUser._id;
+          });
+          setSavedMovies(usersMovies);
+        })
+        .catch((err) => {
+          if (err === 401) {
+            signOut();
+          } else {
+            changeSavedError(
+              "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+            );
+          }
         });
-        setSavedMovies(usersMovies);
-      })
-      .catch(() => {
-        changeSavedError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-        );
-      });
+    } else {
+      setSavedMovies([]);
+    }
   }, [currentUser]);
 
   React.useEffect(() => {
@@ -271,6 +303,12 @@ function App() {
         });
     }
   }, []);
+
+  React.useEffect(() => {
+    if (editSuccess === true) {
+      setEditSuccess(false);
+    }
+  }, [location]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -330,6 +368,7 @@ function App() {
                   apiError={savedError}
                   changeApiError={changeSavedError}
                   removeMovie={removeMovie}
+                  movieIdToDelete={movieIdToDelete}
                 />
                 <Footer />
               </>
@@ -353,6 +392,7 @@ function App() {
                   apiError={profileError}
                   changeApiError={changeProfileError}
                   blocked={formsBlocked}
+                  editSuccess={editSuccess}
                 />
                 <Footer />
               </>

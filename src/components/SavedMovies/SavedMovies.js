@@ -4,7 +4,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Filter from "../../utils/Filter";
 
-function SavedMovies({ savedMovies, apiError, changeApiError, removeMovie }) {
+function SavedMovies({ savedMovies, apiError, changeApiError, removeMovie, movieIdToDelete }) {
   const { filterByQuery } = Filter();
 
   const [checkboxOn, setCheckboxOn] = React.useState(false);
@@ -22,6 +22,12 @@ function SavedMovies({ savedMovies, apiError, changeApiError, removeMovie }) {
       setSearchResults([]);
     }
   }
+  React.useEffect(() => {
+    const updatedResults = searchResults.filter((item) => {
+      return item._id !== movieIdToDelete
+    });
+    setSearchResults(updatedResults);
+  }, [movieIdToDelete])
 
   return (
     <main className="saved-movies">

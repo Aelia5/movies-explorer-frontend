@@ -41,6 +41,8 @@ function Login({ handleLoginSubmit, apiError, changeApiError, blocked }) {
             placeholder="Введите вашу электронную почту"
             id="email"
             name="email"
+            pattern="[A-Za-z0-9\._%+\-]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,4}$"
+            title="Введите корректный email"
             onChange={handleChange}
             value={values.email || ""}
             required

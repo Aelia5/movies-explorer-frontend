@@ -1,6 +1,20 @@
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import React from "react";
+import {
+  SHORTIE_DURATION,
+  BIG_SCREEN_WIDTH,
+  MIDDLE_SCREEN_WIDTH,
+  LITTLE_SCREEN_WIDTH,
+  BIG_START_NUMBER,
+  MIDDLE_START_NUMBER,
+  LITTLE_START_NUMBER,
+  MIN_START_NUMBER,
+  BIG_ADD_NUMBER,
+  MIDDLE_ADD_NUMBER,
+  LITTLE_ADD_NUMBER
+
+} from "../../utils/constants";
 
 function MoviesCardList({
   searchResults,
@@ -35,22 +49,22 @@ function MoviesCardList({
     if (isSaved) {
       setCardsToRender(cards);
     } else {
-      if (width >= 1280) {
-        setCardsNumber(16);
-        setCardsToRender(cards.slice(0, 16));
-        setNumberToAdd(4);
-      } else if (width > 990) {
-        setCardsNumber(12);
-        setCardsToRender(cards.slice(0, 12));
-        setNumberToAdd(3);
-      } else if (width > 630) {
-        setCardsNumber(8);
-        setCardsToRender(cards.slice(0, 8));
-        setNumberToAdd(2);
+      if (width >= BIG_SCREEN_WIDTH) {
+        setCardsNumber(BIG_START_NUMBER);
+        setCardsToRender(cards.slice(0, BIG_START_NUMBER));
+        setNumberToAdd(BIG_ADD_NUMBER);
+      } else if (width > MIDDLE_SCREEN_WIDTH) {
+        setCardsNumber(MIDDLE_START_NUMBER);
+        setCardsToRender(cards.slice(0, MIDDLE_START_NUMBER));
+        setNumberToAdd(MIDDLE_ADD_NUMBER);
+      } else if (width > LITTLE_SCREEN_WIDTH) {
+        setCardsNumber(LITTLE_START_NUMBER);
+        setCardsToRender(cards.slice(0, LITTLE_START_NUMBER));
+        setNumberToAdd(LITTLE_ADD_NUMBER);
       } else {
-        setCardsNumber(5);
-        setCardsToRender(cards.slice(0, 5));
-        setNumberToAdd(2);
+        setCardsNumber(MIN_START_NUMBER);
+        setCardsToRender(cards.slice(0, MIN_START_NUMBER));
+        setNumberToAdd(LITTLE_ADD_NUMBER);
       }
     }
   }, [cards, width, isSaved]);
@@ -65,7 +79,7 @@ function MoviesCardList({
     if (checkboxOn) {
       setCards(
         fullArray.filter((movie) => {
-          return movie.duration <= 40;
+          return movie.duration <= SHORTIE_DURATION;
         })
       );
     } else {

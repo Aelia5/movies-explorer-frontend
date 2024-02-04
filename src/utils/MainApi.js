@@ -77,6 +77,8 @@ function MainApi() {
         return res.json();
       } else if (res.status === 409) {
         return Promise.reject("Пользователь с таким email уже существует.");
+      } else if (res.status === 401) {
+        return Promise.reject(res.status);
       } else {
         return Promise.reject("При обновлении профиля произошла ошибка.");
       }
@@ -94,7 +96,7 @@ function MainApi() {
       if (res.status === 200) {
         return res.json();
       } else {
-        return Promise.reject();
+        return Promise.reject(res.status);
       }
     });
   }
@@ -124,7 +126,7 @@ function MainApi() {
       if (res.status === 201) {
         return res.json();
       } else {
-        return Promise.reject();
+        return Promise.reject(res.status);
       }
     });
   }
@@ -140,7 +142,7 @@ function MainApi() {
       if (res.status === 200) {
         return res.json();
       } else {
-        return Promise.reject();
+        return Promise.reject(res.status);
       }
     });
   }

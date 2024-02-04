@@ -9,6 +9,7 @@ function Profile({
   changeApiError,
   handleEditProfileSubmit,
   blocked,
+  editSuccess,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -39,7 +40,7 @@ function Profile({
   }, [values, currentUser]);
 
   React.useEffect(() => {
-    resetForm(currentUser, {}, false);
+     resetForm(currentUser, {}, false);
   }, []);
 
   React.useEffect(() => {
@@ -52,7 +53,9 @@ function Profile({
     <main>
       <section className="profile">
         <h1 className="form-title profile__title">
-          Привет, {currentUser.name}!
+          {editSuccess && !isEdited
+            ? `Изменения успешно сохранены!`
+            : `Привет, ${currentUser.name}!`}
         </h1>
         {isEdited ? (
           <form className="profile__form" onSubmit={handleSubmit} noValidate>
@@ -83,6 +86,8 @@ function Profile({
                 placeholder="Почта"
                 id="email"
                 name="email"
+                pattern="[A-Za-z0-9\._%+\-]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,4}$"
+                title="Введите корректный email"
                 value={values.email}
                 required
                 onChange={handleChange}
