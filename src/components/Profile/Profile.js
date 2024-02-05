@@ -1,28 +1,64 @@
 import "./Profile.css";
 import React from "react";
+import { useFormWithValidation } from "../Validation/Validation";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function Profile({ onExit }) {
-  const [name, setName] = React.useState("Виталий");
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
+function Profile({
+  onExit,
+  apiError,
+  changeApiError,
+  handleEditProfileSubmit,
+  blocked,
+  editSuccess,
+}) {
+  const currentUser = React.useContext(CurrentUserContext);
 
-  const [email, setEmail] = React.useState("pochta@yandex.ru");
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
+  const [isNew, setIsNew] = React.useState(false);
+
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation();
 
   const [isEdited, setIsEdited] = React.useState(false);
   function openEdit() {
     setIsEdited(true);
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (isValid) {
+      handleEditProfileSubmit(values, resetForm, setIsEdited);
+    }
+  }
+
+  React.useEffect(() => {
+    if (
+      values.name !== currentUser.name ||
+      values.email !== currentUser.email
+    ) {
+      setIsNew(true);
+    } else setIsNew(false);
+  }, [values, currentUser]);
+
+  React.useEffect(() => {
+     resetForm(currentUser, {}, false);
+  }, []);
+
+  React.useEffect(() => {
+    if (apiError) {
+      changeApiError("");
+    }
+  }, [values]);
+
   return (
     <main>
       <section className="profile">
-        <h1 className="form-title profile__title">Привет, Виталий!</h1>
+        <h1 className="form-title profile__title">
+          {editSuccess && !isEdited
+            ? `Изменения успешно сохранены!`
+            : `Привет, ${currentUser.name}!`}
+        </h1>
         {isEdited ? (
-          <form className="profile__form">
+          <form className="profile__form" onSubmit={handleSubmit} noValidate>
             <label className="profile__label" htmlFor="name">
               Имя
               <input
@@ -31,13 +67,17 @@ function Profile({ onExit }) {
                 placeholder="Имя"
                 id="name"
                 name="name"
-                value={name}
+                value={values.name}
                 minLength="2"
                 maxLength="30"
-                onChange={handleNameChange}
+                pattern="[A-Za-zА-Яа-яЁё\s\-]+$"
+                title="Только кириллица, латиница, дефисы и пробелы"
+                onChange={handleChange}
                 required
+                disabled={blocked}
               ></input>
             </label>
+            <p className="form__input-error">{errors.name}</p>
             <label className="profile__label" htmlFor="email">
               Почта
               <input
@@ -46,27 +86,32 @@ function Profile({ onExit }) {
                 placeholder="Почта"
                 id="email"
                 name="email"
-                value={email}
+                pattern="[A-Za-z0-9\._%+\-]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,4}$"
+                title="Введите корректный email"
+                value={values.email}
                 required
-                onChange={handleEmailChange}
+                onChange={handleChange}
+                disabled={blocked}
               ></input>
             </label>
-            <p className="api-error profile__api-error">
-              При обновлении профиля произошла ошибка
-            </p>
-            <button className="submit-button submit-button_active">
+            <p className="form__input-error">{errors.email}</p>
+            <p className="api-error profile__api-error">{apiError}</p>
+            <button
+              className="submit-button"
+              disabled={!isValid || !isNew || apiError || blocked}
+            >
               Сохранить
             </button>
           </form>
         ) : (
           <div className="profile__form">
-            <div className="profile__label">
+            <div className="profile__label profile__label_type_inedited">
               Имя
-              <span className="profile__input">Виталий</span>
+              <span className="profile__input">{currentUser.name}</span>
             </div>
-            <div className="profile__label">
+            <div className="profile__label profile__label_type_inedited">
               E-mail
-              <span className="profile__input">pochta@yandex.ru</span>
+              <span className="profile__input">{currentUser.email}</span>
             </div>
             <div className="profile__options">
               <button className="profile__option" onClick={openEdit}>

@@ -31,7 +31,7 @@
   outline: 2px solid #424242;
 }
 
-.form__input_invalid {
+.form__input:invalid {
   color: #ee3465;
 }
 
@@ -42,11 +42,7 @@
   font-size: 10px;
   line-height: 12px;
   color: #ee3465;
-  visibility: hidden;
-}
-
-.form__input-error_visible {
-  visibility: visible;
+ min-height:12px;
 }
 
 @media screen and (max-width: 426px) {

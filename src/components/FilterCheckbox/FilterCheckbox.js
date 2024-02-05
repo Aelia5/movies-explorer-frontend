@@ -1,13 +1,7 @@
 import "./FilterCheckbox.css";
 import React from "react";
 
-function FilterCheckbox() {
-  const [checkboxOn, setCheckboxOn] = React.useState(false);
-
-  function handleCheckboxClick() {
-    setCheckboxOn(!checkboxOn);
-  }
-
+function FilterCheckbox({ checkboxOn, handleCheckboxClick }) {
   return (
     <label className="filter-checkbox" htmlFor="shortie">
       <input
@@ -16,7 +10,11 @@ function FilterCheckbox() {
         id="shortie"
         onClick={handleCheckboxClick}
       />
-      <span className="filter-checkbox__visible-checkbox"></span>
+      <span
+        className={`filter-checkbox__visible-checkbox ${
+          checkboxOn && "filter-checkbox__visible-checkbox_on"
+        }`}
+      ></span>
       Короткометражки
     </label>
   );

@@ -1,23 +1,71 @@
 import "./MoviesCard.css";
 import React from "react";
 
-function MoviesCard({ movieImage, isSaved }) {
-  const [isLiked, setIsLiked] = React.useState(false);
+function MoviesCard({
+  movie,
+  isListSaved,
+  savedMovies,
+  addMovie,
+  removeMovie,
+}) {
+  const [isLiked, setIsLiked] = React.useState(true);
 
-  function toggleLike() {
-    setIsLiked(!isLiked);
+  React.useEffect(() => {
+    if (!isListSaved) {
+      const savedMoviesIds = savedMovies.map((movie) => {
+        return movie.movieId;
+      });
+      const isSaved = savedMoviesIds.some((movieId) => {
+        return movieId === movie.id;
+      });
+      setIsLiked(isSaved);
+    }
+  }, [savedMovies, movie.id, isListSaved]);
+
+  function findMovieId(movieId) {
+    const searchedMovie = savedMovies.find((movie) => {
+      return movie.movieId === movieId;
+    });
+    return searchedMovie._id;
+  }
+
+  function handleLikeClick() {
+    if (isListSaved) {
+      removeMovie(movie._id);
+    } else {
+      if (!isLiked) {
+        addMovie(movie);
+      } else {
+        const idToRemove = findMovieId(movie.id);
+        removeMovie(idToRemove);
+      }
+    }
   }
 
   return (
     <li className="movies-card">
-      <img
-        className="movies-card__image"
-        alt={movieImage.name}
-        src={movieImage.link}
-      ></img>
-      <h2 className="movies-card__title">33 слова о дизайне</h2>
-      {isSaved ? (
-        <button className="movies-card__button  movies-card__button_type_delete" />
+      <a
+        href={movie.trailerLink}
+        target="_blank"
+        rel="noreferrer"
+        className="movies-card__link"
+      >
+        <img
+          alt={movie.nameRU}
+          src={
+            isListSaved
+              ? movie.image
+              : `https://api.nomoreparties.co${movie.image.url}`
+          }
+          className="movies-card__image"
+        ></img>
+      </a>
+      <h2 className="movies-card__title">{movie.nameRU}</h2>
+      {isListSaved ? (
+        <button
+          className="movies-card__button  movies-card__button_type_delete"
+          onClick={handleLikeClick}
+        />
       ) : (
         <button
           className={`movies-card__button ${
@@ -25,11 +73,13 @@ function MoviesCard({ movieImage, isSaved }) {
               ? "movies-card__button_type_liked"
               : "movies-card__button_type_unliked"
           }`}
-          onClick={toggleLike}
+          onClick={handleLikeClick}
         ></button>
       )}
 
-      <p className="movies-card__length">1ч42м</p>
+      <p className="movies-card__length">{`${Math.floor(movie.duration / 60)}ч${
+        movie.duration % 60
+      }м`}</p>
     </li>
   );
 }

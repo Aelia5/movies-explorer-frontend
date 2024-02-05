@@ -40,8 +40,8 @@
 }
 
 .preloader {
-  display: none;
-  /* display: flex; */
+  /* display: none; */
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -62,7 +62,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: #ff6838;
+  background: #3DDC84;
   border-radius: 50px;
 }
 

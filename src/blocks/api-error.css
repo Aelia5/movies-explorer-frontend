@@ -4,13 +4,10 @@
   line-height: 13.31px;
   color: #ee3465;
   text-align: center;
-  visibility: hidden;
   min-height: 26px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
 
-.api-error_visible {
-  visibility: visible;
-}
+
