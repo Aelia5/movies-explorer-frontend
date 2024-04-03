@@ -6,9 +6,9 @@
 
 ## [Ссылка на макет (dark-5)](https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/Дипломный-проект?type=design&node-id=1-11614&mode=design)
 
-## [Ссылка на pull request](https://github.com/Aelia5/movies-explorer-frontend/pull/2)
-
-## [Ссылка на проект, размещнный на сервере](https://aelia.diploma.nomoredomainsmonster.ru/)
+<!--## [Ссылка на pull request](https://github.com/Aelia5/movies-explorer-frontend/pull/2)
+-->
+## [Ссылка на проект, размещённый на сервере](https://aelia.diploma.nomoredomainsmonster.ru/)
 
 **Реализован следующий функционал:**
 
