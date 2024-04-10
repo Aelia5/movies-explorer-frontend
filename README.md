@@ -4,9 +4,9 @@
 
 ## Автор: Ольга Любимова
 
-## [Ссылка на макет (dark-5)](https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/Дипломный-проект?type=design&node-id=1-11614&mode=design)
+<!--## [Ссылка на макет (dark-5)](https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/Дипломный-проект?type=design&node-id=1-11614&mode=design)
 
-## [Ссылка на сайт](https://aelia.diploma.nomoredomainsmonster.ru/)
+## [Ссылка на сайт](https://aelia.diploma.nomoredomainsmonster.ru/)-->
 
 Фронтенд для дипломного проекта, бэкенд которого находится [здесь](https://github.com/Aelia5/movies-explorer-api): это сайт, на котором пользователь может регистрироваться, редактировать информацию в своём профиле, искать фильмы в базе данных и сохранять результаты поиска.
 
